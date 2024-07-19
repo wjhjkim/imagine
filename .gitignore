@@ -11,6 +11,9 @@
 # production
 /build
 
+public/water.jpg
+public/waternormals.jpg
+
 # misc
 .DS_Store
 .env.local
