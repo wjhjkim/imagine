@@ -5,11 +5,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Login from './login';
 import Wave from './wave';
+import PictureStack from './picture_stack.js';
+import PictureThrow from './picture_throw.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Wave />
+    <PictureThrow />
   </React.StrictMode>
 );
 
