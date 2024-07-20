@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './picture_throw.css';
 
-const PictureThrow = () => {
+const PictureThrowTwoD = () => {
   const [images, setImages] = useState([]);
   const [count, setCount] = useState(5); // 카운트 상태 추가
   const mainCanvasRef = useRef(null);
@@ -36,24 +36,24 @@ const PictureThrow = () => {
 
   const createExplosion = (img, imgCanvas, x, y, imgSize) => {
     const particles = [];
-    const particleCount = 500; // Adjusted number of particles for better performance
+    const particleCount = 800; // Adjusted number of particles for better performance
 
     for (let i = 0; i < particleCount; i++) {
-      const randomX = Math.floor(Math.random() * img.width);
-      const randomY = Math.floor(Math.random() * img.height);
-
-      particles.push({
-        x: x,
-        y: y,
-        dx: (randomX - Math.floor(img.width) * 0.5) * 0.005,
-        dy: (randomY - Math.floor(img.height) * 0.5) * 0.005,
-        size: Math.random() * (imgSize / 40),
-        life: Math.random() * 30 + 30,
-        img: img,
-        imgX: randomX,
-        imgY: randomY,
-      });
-    }
+        const randomX = Math.floor(Math.random() * img.width);
+        const randomY = Math.floor(Math.random() * img.height);
+  
+        particles.push({
+          x: x,
+          y: y,
+          dx: (randomX - img.width/2) / img.width * 35,
+          dy: (randomY - img.height/2) / img.height * 20,
+          size: Math.random() * 25, //(imgSize / 30),
+          life: Math.random() * 30 + 30,
+          img: img,
+          imgX: randomX,
+          imgY: randomY,
+        });
+      }
 
     particlesRef.current.push(...particles);
   };
@@ -156,7 +156,10 @@ const PictureThrow = () => {
     img.src = imgObj.src;
 
     img.onload = () => {
-      const initialSize = img.width / 2; // 처음 크기를 줄입니다.
+        const canvasWidth = mainCanvasRef.current.width;
+      const canvasHeight = mainCanvasRef.current.height;
+
+        const initialSize = Math.min(canvasWidth, canvasHeight); // 처음 크기를 줄입니다.
       const startX = imgObj.x - initialSize / 2;
       const startY = imgObj.y - initialSize / 2;
       const targetSize = initialSize / 5; // 터질 크기 설정
@@ -210,13 +213,29 @@ const PictureThrow = () => {
     });
   }, [images]);
 
+  const resizeCanvas = () => {
+    if (mainCanvasRef.current) {
+      const canvas = mainCanvasRef.current;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+  };
+
+  useEffect(() => {
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    return () => {
+      window.removeEventListener('resize', resizeCanvas);
+    };
+  }, []);
+
   useEffect(() => {
     let timer;
-    if (count === 0) {
+    if (count <= 0) {
       // Count가 0이 되면 3초 후에 화면 클릭 시 초기화 대기
       timer = setTimeout(() => {
         document.addEventListener('click', handleReset);
-      }, 3000);
+      }, 5000);
     } else {
       document.removeEventListener('click', handleReset);
     }
@@ -229,7 +248,7 @@ const PictureThrow = () => {
 
   return (
     <div 
-      className="drop-zone" 
+      className="picture-throw-2d" 
       onDrop={handleDrop} 
       onDragOver={handleDragOver}
       onMouseDown={handleMouseDown}
@@ -237,8 +256,8 @@ const PictureThrow = () => {
       onMouseUp={handleMouseUp}
       style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
     >
-      <canvas ref={mainCanvasRef} width={1000} height={640} style={{ position: 'absolute', top: 0, left: 0 }} />
-      <div className="count-display" style={{ position: 'absolute', top: -40, left: 430, fontSize: '24px', color: 'black' }}>
+      <canvas ref={mainCanvasRef} />
+      <div className="count-display" style={{ position: 'absolute', top: 10, left: 10, fontSize: '24px', color: 'white' }}>
         Count: {count}
       </div>
       {/* <p>Drag & Drop images here</p> */}
@@ -246,4 +265,4 @@ const PictureThrow = () => {
   );
 };
 
-export default PictureThrow;
+export default PictureThrowTwoD;

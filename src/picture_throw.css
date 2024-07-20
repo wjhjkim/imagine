@@ -1,7 +1,6 @@
-.drop-zone {
+.picture-throw {
   width: 100vw;
   height: 100vh;
-  border: 2px dashed #ccc;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,6 +13,6 @@ canvas {
   left: 0;
 }
 
-.drop-zone p {
+.picture-throw p {
   color: #999;
 }

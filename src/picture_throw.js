@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './picture_throw.css';
 
-const PictureThrowD = () => {
+const PictureThrow = () => {
   const [images, setImages] = useState([]);
   const mainCanvasRef = useRef(null);
   const imageCanvasesRef = useRef([]);
@@ -194,7 +194,7 @@ const PictureThrowD = () => {
 
   return (
     <div
-      className="drop-zone"
+      className="picture-throw"
       onDrop={handleDrop}
       onDragOver={handleDragOver}
     >
@@ -203,4 +203,4 @@ const PictureThrowD = () => {
   );
 };
 
-export default PictureThrowD;
+export default PictureThrow;
