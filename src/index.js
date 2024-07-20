@@ -1,11 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Login from './login';
-import Wave from './wave';
-import PictureStack from './picture_stack.js';
 import PictureThrow from './picture_throw.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

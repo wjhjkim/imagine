@@ -33,17 +33,21 @@ const PictureThrowD = () => {
   const createExplosion = (img, imgCanvas, x, y, imgSize) => {
     const particles = [];
     const particleCount = 2000;
+    const radios = Math.min(img.width/2, img.height/2);
 
     for (let i = 0; i < particleCount; i++) {
       const randomX = Math.floor(Math.random() * img.width);
       const randomY = Math.floor(Math.random() * img.height);
+      // const randomX = (Math.random()-0.5) * 2 * radios + radios;
+      // // const randomY = (Math.random()-0.5) * 2 * (Math.sqrt(radios^2-(randomX-radios)^2)) + radios;
+      // const randomY = (Math.random()-0.5) * 2 * radios + radios;
 
       particles.push({
         x: x,
         y: y,
-        dx: (randomX - img.width/2) / img.width * 35,
-        dy: (randomY - img.height/2) / img.height * 20,
-        size: Math.random() * 15, //(imgSize / 30),
+        dx: (randomX - img.width/2) * 0.04,
+        dy: (randomY - img.height/2) * 0.04,
+        size: Math.random() * (imgSize / 30),
         life: Math.random() * 30 + 30,
         img: img,
         imgX: randomX,
@@ -162,7 +166,7 @@ const PictureThrowD = () => {
       const initialSize = Math.min(canvasWidth, canvasHeight);
       const startX = imgObj.x - initialSize / 2;
       const startY = imgObj.y - initialSize / 2;
-      const targetSize = initialSize / 4;
+      const targetSize = initialSize / 5;
       const mainCtx = mainCanvasRef.current.getContext('2d');
     
       animateImage(ctx, img, startX, startY, targetSize, initialSize, mainCtx, index);

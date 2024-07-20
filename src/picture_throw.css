@@ -1,20 +1,19 @@
 .drop-zone {
-    width: 800px;
-    height: 600px;
-    border: 2px dashed #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-  
-  canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  
-  .drop-zone p {
-    position: absolute;
-    color: #999;
-  }
+  width: 100vw;
+  height: 100vh;
+  border: 2px dashed #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.drop-zone p {
+  color: #999;
+}
