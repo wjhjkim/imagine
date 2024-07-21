@@ -8,8 +8,8 @@ function ButtonWindow() {
           <div className="button-container">
             <Link to="/picture-throw" className="nav-button">Page 1</Link>
             <Link to="/picture-throw-2D" className="nav-button">Page 2</Link>
-            <button className="nav-button" onClick={() => alert('Navigating to Page 3')}>Page 3</button>
-            <button className="nav-button" onClick={() => alert('Navigating to Page 4')}>Page 4</button>
+            <Link to="/picture-throw-watercolor" className="nav-button">Page 3</Link>
+            <Link to="/picture-throw-changecolor" className="nav-button">Page 4</Link>
           </div>
         </div>
       );

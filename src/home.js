@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { useSwipeable } from 'react-swipeable';
 import './home.css';
 import ButtonWindow from './button_window';
 import PictureThrow from './picture_throw';
 import PictureThrowTwoD from './picture_throw_2D';
+import PictureThrowWaterColor from './picture_throw_watercolor';
+import PictureThrowChangeColor from './picture_throw_changecolor';
 
 function Home() {
   return (
@@ -18,34 +19,23 @@ function Home() {
 const AnimatedRoutes = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [direction, setDirection] = useState('slide-left');
+  const [inProp, setInProp] = useState(false);
 
-  const handlers = useSwipeable({
-    onSwipedLeft: () => {
-      if (location.pathname === "/picture-throw") {
-        setDirection('slide-left');
-        navigate("/picture-throw-2d");
-      }
-    },
-    onSwipedRight: () => {
-      if (location.pathname === "/picture-throw-2d") {
-        setDirection('slide-right');
-        navigate("/picture-throw");
-      }
-    },
-    preventDefaultTouchmoveEvent: true,
-    trackMouse: true,
-  });
+  useEffect(() => {
+    setInProp(true);
+  }, [location]);
 
   return (
-    <div {...handlers} className="swipe-container">
+    <div className="transition-container">
       <TransitionGroup component={null}>
-        <CSSTransition key={location.pathname} classNames={direction} timeout={600}>
-          <div className="route-section">
+        <CSSTransition key={location.pathname} classNames="mosaic" timeout={200} onEnter={() => setInProp(false)} onEntered={() => setInProp(true)}>
+          <div className={`route-section ${inProp ? 'in' : ''}`}>
             <Routes location={location}>
               <Route path="/" element={<ButtonWindow />} />
               <Route path="/picture-throw" element={<PictureThrow />} />
               <Route path="/picture-throw-2d" element={<PictureThrowTwoD />} />
+              <Route path="/picture-throw-watercolor" element={<PictureThrowWaterColor />} />
+              <Route path="/picture-throw-changecolor" element={<PictureThrowChangeColor />} />
             </Routes>
           </div>
         </CSSTransition>

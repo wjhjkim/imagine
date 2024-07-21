@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import './picture_throw.css';
+import './picture_throw_2d.css';
 
 const PictureThrowTwoD = () => {
   const [images, setImages] = useState([]);
@@ -36,7 +36,7 @@ const PictureThrowTwoD = () => {
 
   const createExplosion = (img, imgCanvas, x, y, imgSize) => {
     const particles = [];
-    const particleCount = 800; // Adjusted number of particles for better performance
+    const particleCount = 1500; // Adjusted number of particles for better performance
 
     for (let i = 0; i < particleCount; i++) {
         const randomX = Math.floor(Math.random() * img.width);
