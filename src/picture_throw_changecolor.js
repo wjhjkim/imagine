@@ -32,6 +32,8 @@ const PictureThrowChangeColor = () => {
 
   const createExplosion = (img, imgCanvas, x, y, imgSize) => {
     const particles = [];
+    const random_x = Math.floor(6 * (Math.random() - 0.5) * 2) + 2;
+    const random_y = Math.floor(-6 * (Math.random() - 0.5) * 2) - 2;
 
     for (let i = 0; i < 60; i++) {
         for (let j = 0; j < 60; j++){
@@ -41,8 +43,8 @@ const PictureThrowChangeColor = () => {
             particles.push({
               x: x + (randomX - img.width / 2) / img.width * 800,
               y: y + (randomY - img.height / 2) / img.height * 600,
-              dx: 8,
-              dy: -8, //img.height * (Math.random()-0.5) * 0.005,
+              dx: random_x,
+              dy: random_y, //img.height * (Math.random()-0.5) * 0.005,
               size: Math.random() * 3 + 2, //(imgSize / 30),
               life: Math.random() * 30 + 30,
               img: img,
