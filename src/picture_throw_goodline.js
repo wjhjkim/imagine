@@ -129,7 +129,7 @@ const PictureThrowGoodLine = () => {
         dx: 0,
         dy: 0,
         size: Math.random() * 15,
-        life: 300,
+        life: 200,
         color: '#14141B'
       });
     }
@@ -164,8 +164,30 @@ const PictureThrowGoodLine = () => {
       mainCtx.fillStyle = '#14141B';
       mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
+      var path = "";
+      switch(Math.floor(Math.random() * 5)) {
+        case 0 :
+            path = "/picture-throw";
+            break;
+        case 1 :
+            path = "/picture-throw-watercolor";
+            break;
+        case 2 :
+            path = "/picture-throw-changecolor";
+            break;
+        case 3 :
+            path = "/picture-throw-line";
+            break;
+        case 4 :
+            path = "/picture-throw-greatline";
+            break;
+        default :
+            path = "/picture-throw";
+      }
+
+
       setTimeout(() => {
-        history('/picture-throw-greatline');
+        history(path);
       }, 1000);
     }
   };

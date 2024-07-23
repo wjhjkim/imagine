@@ -185,8 +185,30 @@ const PictureThrowWaterColor = () => {
       mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
       // 1초 뒤에 PictureThrow 화면으로 전환
+      var path = "";
+      switch(Math.floor(Math.random() * 5)) {
+        case 0 :
+            path = "/picture-throw";
+            break;
+        case 1 :
+            path = "/picture-throw-greatline";
+            break;
+        case 2 :
+            path = "/picture-throw-changecolor";
+            break;
+        case 3 :
+            path = "/picture-throw-line";
+            break;
+        case 4 :
+            path = "/picture-throw-goodline";
+            break;
+        default :
+            path = "/picture-throw";
+      }
+
+
       setTimeout(() => {
-        history('/picture-throw-changecolor');
+        history(path);
       }, 1000);
     }
   };

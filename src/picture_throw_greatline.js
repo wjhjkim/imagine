@@ -132,7 +132,7 @@ const PictureThrowGreatLine = () => {
             dx: canvasHeight / 400,
             dy: canvasWidth / -400,
             size: 8,
-            life: 300,
+            life: 200,
             color: '#14141B'
           });
       }
@@ -143,7 +143,7 @@ const PictureThrowGreatLine = () => {
             dx: canvasWidth / -400,
             dy: canvasHeight / 400,
             size: 8,
-            life: 300,
+            life: 200,
             color: '#14141B'
           });
       }
@@ -178,8 +178,30 @@ const PictureThrowGreatLine = () => {
       mainCtx.fillStyle = '#14141B';
       mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
+      var path = "";
+      switch(Math.floor(Math.random() * 5)) {
+        case 0 :
+            path = "/picture-throw";
+            break;
+        case 1 :
+            path = "/picture-throw-watercolor";
+            break;
+        case 2 :
+            path = "/picture-throw-changecolor";
+            break;
+        case 3 :
+            path = "/picture-throw-line";
+            break;
+        case 4 :
+            path = "/picture-throw-goodline";
+            break;
+        default :
+            path = "/picture-throw";
+      }
+
+
       setTimeout(() => {
-        history('/picture-throw');
+        history(path);
       }, 1000);
     }
   };

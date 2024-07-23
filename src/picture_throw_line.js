@@ -130,10 +130,10 @@ const PictureThrowLine = () => {
       particles.push({
         x: randomXX,
         y: randomYY,
-        dx: (randomX-randomXX)/200,
-        dy: (randomY-randomYY)/200,
+        dx: (randomX-randomXX)/150,
+        dy: (randomY-randomYY)/150,
         size: Math.random() * 15,
-        life: 300,
+        life: 200,
         color: '#14141B'
       });
     }
@@ -167,8 +167,30 @@ const PictureThrowLine = () => {
       mainCtx.fillStyle = '#14141B';
       mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
+      var path = "";
+      switch(Math.floor(Math.random() * 5)) {
+        case 0 :
+            path = "/picture-throw";
+            break;
+        case 1 :
+            path = "/picture-throw-watercolor";
+            break;
+        case 2 :
+            path = "/picture-throw-changecolor";
+            break;
+        case 3 :
+            path = "/picture-throw-greatline";
+            break;
+        case 4 :
+            path = "/picture-throw-goodline";
+            break;
+        default :
+            path = "/picture-throw";
+      }
+
+
       setTimeout(() => {
-        history('/picture-throw-goodline');
+        history(path);
       }, 1000);
     }
   };
