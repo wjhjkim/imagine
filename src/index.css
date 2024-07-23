@@ -12,7 +12,14 @@ code {
     monospace;
 } */
 
+@font-face {
+  font-family: "EduAUVICWANTHand-VariableFont_wght";
+  font-weight: normal;
+  src: url("./fonts/EduAUVICWANTHand-VariableFont_wght.ttf") format("truetype");
+}
+
 body, html, #root {
+  font-family: "EduAUVICWANTHand-VariableFont_wght";
   margin: 0;
   padding: 0;
   width: 100%;
@@ -21,4 +28,9 @@ body, html, #root {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #14141B;
+}
+
+.custom-font {
+  font-family: "EduAUVICWANTHand-VariableFont_wght";
 }

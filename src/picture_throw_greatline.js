@@ -2,13 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // 추가
 import './picture_throw.css';
 
-const PictureThrowWaterColor = () => {
+const PictureThrowGreatLine = () => {
   const [images, setImages] = useState([]);
+  const [isFadingOut, setIsFadingOut] = useState(false);
   const mainCanvasRef = useRef(null);
   const imageCanvasesRef = useRef([]);
   const particlesRef = useRef([]);
   const finalParticlesImageRef = useRef(null);
-  const backgroundImageRef = useRef(new Image());
+  const finishedParticlesRef = useRef([]);
   const history = useNavigate();
 
   const imagePaths = [
@@ -27,7 +28,6 @@ const PictureThrowWaterColor = () => {
             const rect = mainCanvasRef.current.getBoundingClientRect();
             console.log(`Image loaded: ${src}`);
             setImages([{ src, x: rect.width / 2, y: rect.height / 2 }]);
-            localStorage.setItem('selectedImage', src); // 현재 선택된 이미지 저장
         };
         img.onerror = () => {
             console.error(`Failed to load image: ${src}`);
@@ -40,42 +40,42 @@ const PictureThrowWaterColor = () => {
 
   const createExplosion = (img, imgCanvas, x, y, imgSize) => {
     const particles = [];
-    const random_x = 12;
-    const random_y = -8;
+    const particleCount = 4000;
     const canvasWidth = mainCanvasRef.current.width;
     const canvasHeight = mainCanvasRef.current.height;
-    const centerX = canvasWidth / 2;
-    const centerY = canvasHeight / 2;
 
-    for (let i = 0; i < 80; i++) {
-      for (let j = 0; j < 60; j++) {
-        const randomX = Math.floor(i * img.width / 80);
-        const randomY = Math.floor(j * img.height / 60);
-      
-        particles.push({
-          x: centerX,
-          y: centerY,
-          targetX: x + (randomX - img.width / 2) / img.width * canvasWidth,
-          targetY: y + (randomY - img.height / 2) / img.height * canvasHeight,
-          dx: random_x,
-          dy: random_y,
-          size: Math.random() * 5 + 8,
-          life: Math.random() * 1 + 20,
-          img: img,
-          imgX: randomX,
-          imgY: randomY,
-          initialMovement: true,
-        });
+    for (let i = 0; i < particleCount; i++) {
+      const randomX = Math.floor(Math.random() * img.width);
+      const randomX1 = randomX / img.width * canvasWidth;
+      const randomY = Math.floor(Math.random() * img.height);
+      const randomY1 = randomY / img.height * canvasHeight;
+      var randomK = -1;
+      if (randomX / randomY >= img.width / img.height) {
+        randomK = 1;
       }
+      const randomXX = (randomY1 + canvasWidth/canvasHeight * randomX1) / (canvasHeight/canvasWidth + canvasWidth/canvasHeight) + randomK * canvasHeight/2;
+      const randomYY = (randomY1 + canvasWidth/canvasHeight * randomX1) / (canvasHeight/canvasWidth + canvasWidth/canvasHeight) * canvasHeight/canvasWidth - randomK * canvasWidth/2;
+
+      particles.push({
+        x: randomXX,
+        y: randomYY,
+        dx: (randomX1 - randomXX) / 200,
+        dy: (randomY1 - randomYY) / 200,
+        size: 10,
+        life: 205,
+        img: img,
+        imgX: randomX,
+        imgY: randomY,
+      });
     }
+
+    setIsFadingOut(true);
 
     particlesRef.current.push(...particles);
   };
 
   const updateParticles = () => {
     const mainCtx = mainCanvasRef.current.getContext('2d');
-    const backgroundImage = backgroundImageRef.current;
-
     mainCtx.fillStyle = '#14141B';
     mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
@@ -84,38 +84,29 @@ const PictureThrowWaterColor = () => {
     }
 
     particlesRef.current.forEach((p) => {
-      if (p.life > 0) {
-        if (p.initialMovement) {
-          const moveSpeed = 0.05;
-          p.x += (p.targetX - p.x) * moveSpeed;
-          p.y += (p.targetY - p.y) * moveSpeed;
-
-          if (Math.abs(p.targetX - p.x) < 1 && Math.abs(p.targetY - p.y) < 1) {
-            p.initialMovement = false;
-          }
-        } else {
-          p.x += p.dx;
-          p.y += p.dy;
-          p.dx *= -0.8;
-          p.dy *= -0.8;
-          p.life -= 1;
-          p.size *= 1.014;
-        }
+      if (p.life > 1) {
+        p.x += p.dx;
+        p.y += p.dy;
+        p.life -= 1;
 
         mainCtx.drawImage(p.img, p.imgX, p.imgY, 1, 1, p.x, p.y, p.size, p.size);
+      } else {
+        finishedParticlesRef.current.push(p);
+        p.life -= 1;
       }
     });
 
+    // 생명이 남은 파티클을 필터링합니다.
     const aliveParticles = particlesRef.current.filter(p => p.life > 0);
+
+    // 최종 파티클 상태를 유지합니다.
     finalParticlesImageRef.current = captureFinalParticles(mainCtx);
+
     particlesRef.current = aliveParticles;
 
     if (particlesRef.current.length > 0) {
       requestAnimationFrame(updateParticles);
     } else {
-      // mainCtx.filter = 'blur(10px)';
-      // mainCtx.drawImage(backgroundImage, 0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
-      // mainCtx.filter = 'none';
       setTimeout(() => {
         createBlackParticles();
       }, 3000);
@@ -127,20 +118,35 @@ const PictureThrowWaterColor = () => {
     const particleCount = 2000;
     const canvasWidth = mainCanvasRef.current.width;
     const canvasHeight = mainCanvasRef.current.height;
+    const particleX = canvasWidth / particleCount * 2;
+    const particleY = canvasHeight / particleCount * 2;
 
     for (let i = 0; i < particleCount; i++) {
-      const angle = Math.random() * 2 * Math.PI;
-      const speed = Math.random() * 4 + 5;
+      const x = particleX * i / 2;
+      const y = particleY * i / 2;
 
-      particles.push({
-        x: Math.random() * canvasWidth,
-        y: Math.random() * canvasHeight,
-        dx: Math.cos(angle) * speed,
-        dy: Math.sin(angle) * speed,
-        size: Math.random() * 15,
-        life: 200,
-        color: '#14141B'
-      });
+      if (i % 2 === 1) {
+        particles.push({
+            x: x,
+            y: y,
+            dx: canvasHeight / 400,
+            dy: canvasWidth / -400,
+            size: 8,
+            life: 300,
+            color: '#14141B'
+          });
+      }
+      else {
+        particles.push({
+            x: x,
+            y: y,
+            dx: canvasWidth / -400,
+            dy: canvasHeight / 400,
+            size: 8,
+            life: 300,
+            color: '#14141B'
+          });
+      }
     }
 
     particlesRef.current.push(...particles);
@@ -149,6 +155,7 @@ const PictureThrowWaterColor = () => {
 
   const updateBlackParticles = () => {
     const mainCtx = mainCanvasRef.current.getContext('2d');
+    // mainCtx.clearRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
     particlesRef.current.forEach((p) => {
       p.x += p.dx;
@@ -161,16 +168,18 @@ const PictureThrowWaterColor = () => {
       mainCtx.fill();
     });
 
+    // 생명이 남은 파티클을 필터링합니다.
     particlesRef.current = particlesRef.current.filter(p => p.life > 0);
 
     if (particlesRef.current.length > 0) {
       requestAnimationFrame(updateBlackParticles);
     } else {
+      setIsFadingOut(false);
       mainCtx.fillStyle = '#14141B';
       mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
       setTimeout(() => {
-        history('/picture-throw-line');
+        history('/picture-throw');
       }, 1000);
     }
   };
@@ -204,13 +213,13 @@ const PictureThrowWaterColor = () => {
     img.onload = () => {
       const canvasWidth = mainCanvasRef.current.width;
       const canvasHeight = mainCanvasRef.current.height;
-      
+
       const initialSizeX = canvasWidth * 0.4;
       const initialSizeY = canvasHeight * 0.4;
       const startX = imgObj.x - initialSizeX / 2;
       const startY = imgObj.y - initialSizeY / 2;
       const mainCtx = mainCanvasRef.current.getContext('2d');
-    
+
       mainCtx.drawImage(img, startX, startY, canvasWidth, canvasHeight);
 
       createExplosion(img, ctx.canvas, canvasWidth / 2, canvasHeight / 2, canvasWidth);
@@ -248,4 +257,4 @@ const PictureThrowWaterColor = () => {
   );
 };
 
-export default PictureThrowWaterColor;
+export default PictureThrowGreatLine;

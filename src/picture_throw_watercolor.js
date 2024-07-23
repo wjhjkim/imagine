@@ -13,39 +13,30 @@ const PictureThrowWaterColor = () => {
 
   // 미리 정의된 이미지 경로들
   const imagePaths = [
-    '/glass.jpg'
+    '/glass.jpg', 
+    '/picture1.jpg',
+    '/picture2.jpg',
+    '/picture3.jpg',
   ];
 
   useEffect(() => {
     const loadImageData = async () => {
-      const newImages = await Promise.all(
-        imagePaths.map((src) => {
-          return new Promise((resolve) => {
-            const img = new Image();
-            img.onload = () => {
-              const rect = mainCanvasRef.current.getBoundingClientRect();
-              console.log(`Image loaded: ${src}`);
-              resolve({ src, x: rect.width / 2, y: rect.height / 2 });
-            };
-            img.onerror = () => {
-              console.error(`Failed to load image: ${src}`);
-            };
-            img.src = src;
-          });
-        })
-      );
-      setImages(newImages);
-    };
-
-    // 배경 이미지 로드
-    const backgroundImage = backgroundImageRef.current;
-    backgroundImage.src = imagePaths[0];
-    backgroundImage.onload = () => {
-      console.log('Background image loaded.');
+        const randomIndex = Math.floor(Math.random() * imagePaths.length);
+        const src = imagePaths[randomIndex];
+        const img = new Image();
+        img.onload = () => {
+            const rect = mainCanvasRef.current.getBoundingClientRect();
+            console.log(`Image loaded: ${src}`);
+            setImages([{ src, x: rect.width / 2, y: rect.height / 2 }]);
+        };
+        img.onerror = () => {
+            console.error(`Failed to load image: ${src}`);
+        };
+        img.src = src;
     };
 
     loadImageData();
-  }, []);
+}, []);
 
   const createExplosion = (img, imgCanvas, x, y, imgSize) => {
     const particles = [];
@@ -84,7 +75,8 @@ const PictureThrowWaterColor = () => {
     const backgroundImage = backgroundImageRef.current;
 
     // 배경 이미지 그리기
-    mainCtx.clearRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
+    mainCtx.fillStyle = '#14141B';
+    mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
     // mainCtx.filter = 'blur(10px)';  // 블러 필터 적용
     // mainCtx.drawImage(backgroundImage, 0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
     // mainCtx.filter = 'none';  // 블러 필터 제거
@@ -146,7 +138,7 @@ const PictureThrowWaterColor = () => {
         dy: 1 + (4 + 0.005 * (particleCount / 2 - i)) * randomval,
         size: Math.random() * 15 + 5,
         life: 200,
-        color: 'black'
+        color: '#14141B'
       });
     }
 
@@ -160,7 +152,7 @@ const PictureThrowWaterColor = () => {
         dy: 1 + (4 + 0.005 * (particleCount - i)) * randomval,
         size: Math.random() * 15 + 5,
         life: 200,
-        color: 'black'
+        color: '#14141B'
       });
     }
 
@@ -189,7 +181,7 @@ const PictureThrowWaterColor = () => {
     if (particlesRef.current.length > 0) {
       requestAnimationFrame(updateBlackParticles);
     } else {
-      mainCtx.fillStyle = 'black';
+      mainCtx.fillStyle = '#14141B';
       mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
       // 1초 뒤에 PictureThrow 화면으로 전환

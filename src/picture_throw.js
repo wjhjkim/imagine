@@ -13,32 +13,30 @@ const PictureThrowWaterColor = () => {
   const history = useNavigate();
 
   const imagePaths = [
-    '/glass.jpg'
+    '/glass.jpg', 
+    '/picture1.jpg',
+    '/picture2.jpg',
+    '/picture3.jpg',
   ];
 
   useEffect(() => {
     const loadImageData = async () => {
-      const newImages = await Promise.all(
-        imagePaths.map((src) => {
-          return new Promise((resolve) => {
-            const img = new Image();
-            img.onload = () => {
-              const rect = mainCanvasRef.current.getBoundingClientRect();
-              console.log(`Image loaded: ${src}`);
-              resolve({ src, x: rect.width / 2, y: rect.height / 2 });
-            };
-            img.onerror = () => {
-              console.error(`Failed to load image: ${src}`);
-            };
-            img.src = src;
-          });
-        })
-      );
-      setImages(newImages);
+        const randomIndex = Math.floor(Math.random() * imagePaths.length);
+        const src = imagePaths[randomIndex];
+        const img = new Image();
+        img.onload = () => {
+            const rect = mainCanvasRef.current.getBoundingClientRect();
+            console.log(`Image loaded: ${src}`);
+            setImages([{ src, x: rect.width / 2, y: rect.height / 2 }]);
+        };
+        img.onerror = () => {
+            console.error(`Failed to load image: ${src}`);
+        };
+        img.src = src;
     };
 
     loadImageData();
-  }, []);
+}, []);
 
   const createExplosion = (img, imgCanvas, x, y, imgSize) => {
     const particles = [];
@@ -70,7 +68,8 @@ const PictureThrowWaterColor = () => {
 
   const updateParticles = () => {
     const mainCtx = mainCanvasRef.current.getContext('2d');
-    mainCtx.clearRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
+    mainCtx.fillStyle = '#14141B';
+    mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
     if (finalParticlesImageRef.current) {
       mainCtx.drawImage(finalParticlesImageRef.current, 0, 0);
@@ -125,7 +124,7 @@ const PictureThrowWaterColor = () => {
         dy: Math.sin(angle) * speed,
         size: Math.random() * 15,
         life: 300,
-        color: 'black'
+        color: '#14141B'
       });
     }
 
@@ -155,7 +154,7 @@ const PictureThrowWaterColor = () => {
       requestAnimationFrame(updateBlackParticles);
     } else {
       setIsFadingOut(false);
-      mainCtx.fillStyle = 'black';
+      mainCtx.fillStyle = '#14141B';
       mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
       setTimeout(() => {
