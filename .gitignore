@@ -11,8 +11,6 @@
 # production
 /build
 
-public/water.jpg
-public/waternormals.jpg
 public/glass.jpg
 src/fonts/
 public/picture1.jpg
