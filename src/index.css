@@ -1,4 +1,4 @@
-body {
+/* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -10,4 +10,27 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+} */
+
+@font-face {
+  font-family: "EduAUVICWANTHand-VariableFont_wght";
+  font-weight: normal;
+  src: url("./fonts/EduAUVICWANTHand-VariableFont_wght.ttf") format("truetype");
+}
+
+body, html, #root {
+  font-family: "EduAUVICWANTHand-VariableFont_wght";
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #14141B;
+}
+
+.custom-font {
+  font-family: "EduAUVICWANTHand-VariableFont_wght";
 }

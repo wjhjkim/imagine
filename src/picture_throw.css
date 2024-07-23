@@ -1,0 +1,37 @@
+.picture-throw {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.picture-throw p {
+  color: #999;
+}
+
+@keyframes zoomOutAndFade {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+.zoom-out {
+  animation: zoomOutAndFade 5s forwards;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
