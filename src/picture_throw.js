@@ -1,55 +1,69 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // 추가
 import './picture_throw.css';
 
-const PictureThrow = () => {
+const PictureThrowWaterColor = () => {
   const [images, setImages] = useState([]);
+  const [isFadingOut, setIsFadingOut] = useState(false);
   const mainCanvasRef = useRef(null);
   const imageCanvasesRef = useRef([]);
   const particlesRef = useRef([]);
   const finalParticlesImageRef = useRef(null);
+  const finishedParticlesRef = useRef([]);
+  const history = useNavigate();
 
-  const handleDrop = async (event) => {
-    event.preventDefault();
-    const files = Array.from(event.dataTransfer.files);
-    const newImages = await Promise.all(
-      files.filter(file => file.type.startsWith('image/')).map(file => {
-        return new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onload = () => {
-            const rect = mainCanvasRef.current.getBoundingClientRect();
-            resolve({ src: reader.result, x: event.clientX - rect.left, y: event.clientY - rect.top });
-          };
-          reader.readAsDataURL(file);
-        });
-      })
-    );
-    setImages(prevImages => [...prevImages, ...newImages]);
-  };
+  const imagePaths = [
+    '/glass.jpg'
+  ];
 
-  const handleDragOver = (event) => {
-    event.preventDefault();
-  };
+  useEffect(() => {
+    const loadImageData = async () => {
+      const newImages = await Promise.all(
+        imagePaths.map((src) => {
+          return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => {
+              const rect = mainCanvasRef.current.getBoundingClientRect();
+              console.log(`Image loaded: ${src}`);
+              resolve({ src, x: rect.width / 2, y: rect.height / 2 });
+            };
+            img.onerror = () => {
+              console.error(`Failed to load image: ${src}`);
+            };
+            img.src = src;
+          });
+        })
+      );
+      setImages(newImages);
+    };
+
+    loadImageData();
+  }, []);
 
   const createExplosion = (img, imgCanvas, x, y, imgSize) => {
     const particles = [];
     const particleCount = 2000;
+    const canvasWidth = mainCanvasRef.current.width;
+    const canvasHeight = mainCanvasRef.current.height;
 
     for (let i = 0; i < particleCount; i++) {
       const randomX = Math.floor(Math.random() * img.width);
       const randomY = Math.floor(Math.random() * img.height);
 
       particles.push({
-        x: x,
-        y: y,
-        dx: (randomX - img.width/2) / img.width * 35,
-        dy: (randomY - img.height/2) / img.height * 20,
-        size: Math.random() * 15, //(imgSize / 30),
-        life: Math.random() * 30 + 30,
+        x: x + (randomX - img.width / 2) / img.width * canvasWidth / 10,
+        y: y + (randomY - img.height / 2) / img.height * canvasHeight / 10,
+        dx: (randomX - img.width / 2) / img.width * canvasWidth / 30,
+        dy: (randomY - img.height / 2) / img.height * canvasHeight / 30,
+        size: Math.random() * 15,
+        life: Math.random() * 10 + 40,
         img: img,
         imgX: randomX,
         imgY: randomY,
       });
     }
+
+    setIsFadingOut(true);
 
     particlesRef.current.push(...particles);
   };
@@ -63,20 +77,21 @@ const PictureThrow = () => {
     }
 
     particlesRef.current.forEach((p) => {
-      if (p.life > 0) {
+      if (p.life > 1) {
         p.x += p.dx;
         p.y += p.dy;
-        p.dx *= 0.98;
-        p.dy *= 0.98;
         p.life -= 1;
 
         mainCtx.drawImage(p.img, p.imgX, p.imgY, 1, 1, p.x, p.y, p.size, p.size);
+      } else {
+        finishedParticlesRef.current.push(p);
+        p.life -= 1;
       }
     });
 
     // 생명이 남은 파티클을 필터링합니다.
     const aliveParticles = particlesRef.current.filter(p => p.life > 0);
-    
+
     // 최종 파티클 상태를 유지합니다.
     finalParticlesImageRef.current = captureFinalParticles(mainCtx);
 
@@ -84,6 +99,68 @@ const PictureThrow = () => {
 
     if (particlesRef.current.length > 0) {
       requestAnimationFrame(updateParticles);
+    } else {
+      setTimeout(() => {
+        createBlackParticles();
+      }, 3000);
+    }
+  };
+
+  const createBlackParticles = () => {
+    const x = mainCanvasRef.current.width / 2;
+    const y = mainCanvasRef.current.height / 2;
+    const particles = [];
+    const particleCount = 2000;
+    const canvasWidth = mainCanvasRef.current.width;
+    const canvasHeight = mainCanvasRef.current.height;
+
+    for (let i = 0; i < particleCount; i++) {
+      const angle = Math.random() * 2 * Math.PI;
+      const speed = Math.random() * 5 + 3;
+
+      particles.push({
+        x: x,
+        y: y,
+        dx: Math.cos(angle) * speed,
+        dy: Math.sin(angle) * speed,
+        size: Math.random() * 15,
+        life: 300,
+        color: 'black'
+      });
+    }
+
+    particlesRef.current.push(...particles);
+    requestAnimationFrame(updateBlackParticles);
+  };
+
+  const updateBlackParticles = () => {
+    const mainCtx = mainCanvasRef.current.getContext('2d');
+    // mainCtx.clearRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
+
+    particlesRef.current.forEach((p) => {
+      p.x += p.dx;
+      p.y += p.dy;
+      p.life -= 1;
+
+      mainCtx.fillStyle = p.color;
+      mainCtx.beginPath();
+      mainCtx.arc(p.x, p.y, p.size, 0, 2 * Math.PI);
+      mainCtx.fill();
+    });
+
+    // 생명이 남은 파티클을 필터링합니다.
+    particlesRef.current = particlesRef.current.filter(p => p.life > 0);
+
+    if (particlesRef.current.length > 0) {
+      requestAnimationFrame(updateBlackParticles);
+    } else {
+      setIsFadingOut(false);
+      mainCtx.fillStyle = 'black';
+      mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
+
+      setTimeout(() => {
+        history('/picture-throw-watercolor');
+      }, 1000);
     }
   };
 
@@ -104,47 +181,6 @@ const PictureThrow = () => {
     return finalCanvas;
   };
 
-  const animateImage = (ctx, img, startX, startY, targetSize, initialSize, mainCtx, index) => {
-    const duration = 1000;
-    const startTime = performance.now();
-
-    const animate = (time) => {
-      const elapsedTime = time - startTime;
-      const progress = Math.min(elapsedTime / duration, 1);
-
-      const currentSize = initialSize * (1 - progress) * 0.4;
-      const offsetX = (initialSize - currentSize) / 2;
-      const offsetY = (initialSize - currentSize) / 2;
-
-      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-      ctx.drawImage(img, startX + offsetX, startY + offsetY, currentSize, currentSize);
-
-      mainCtx.clearRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
-      imageCanvasesRef.current.forEach((canvas) => {
-        if (canvas) {
-          mainCtx.drawImage(canvas, 0, 0);
-        }
-      });
-
-      if (finalParticlesImageRef.current) {
-        mainCtx.drawImage(finalParticlesImageRef.current, 0, 0);
-      }
-
-      mainCtx.drawImage(img, startX + offsetX, startY + offsetY, currentSize, currentSize);
-
-      if (currentSize > targetSize) {
-        requestAnimationFrame(animate);
-      } else {
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-        imageCanvasesRef.current[index] = null;
-        createExplosion(img, ctx.canvas, startX + initialSize / 2, startY + initialSize / 2, initialSize);
-        updateParticles();
-      }
-    };
-
-    requestAnimationFrame(animate);
-  };
-
   const handleImageLoad = (imgObj, index) => {
     const imgCanvas = document.createElement('canvas');
     imgCanvas.width = mainCanvasRef.current.width;
@@ -157,15 +193,17 @@ const PictureThrow = () => {
     img.onload = () => {
       const canvasWidth = mainCanvasRef.current.width;
       const canvasHeight = mainCanvasRef.current.height;
-      
-      // 이미지를 화면 크기로 맞추기 위해 조정
-      const initialSize = Math.min(canvasWidth, canvasHeight);
-      const startX = imgObj.x - initialSize / 2;
-      const startY = imgObj.y - initialSize / 2;
-      const targetSize = initialSize / 4;
+
+      const initialSizeX = canvasWidth * 0.4;
+      const initialSizeY = canvasHeight * 0.4;
+      const startX = imgObj.x - initialSizeX / 2;
+      const startY = imgObj.y - initialSizeY / 2;
       const mainCtx = mainCanvasRef.current.getContext('2d');
-    
-      animateImage(ctx, img, startX, startY, targetSize, initialSize, mainCtx, index);
+
+      mainCtx.drawImage(img, startX, startY, canvasWidth, canvasHeight);
+
+      createExplosion(img, ctx.canvas, canvasWidth / 2, canvasHeight / 2, canvasWidth);
+      updateParticles();
     };
   };
 
@@ -193,14 +231,10 @@ const PictureThrow = () => {
   }, [images]);
 
   return (
-    <div
-      className="picture-throw"
-      onDrop={handleDrop}
-      onDragOver={handleDragOver}
-    >
+    <div className="picture-throw">
       <canvas ref={mainCanvasRef} />
     </div>
   );
 };
 
-export default PictureThrow;
+export default PictureThrowWaterColor;
