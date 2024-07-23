@@ -1,25 +1,48 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
+import WaterRipple from './WaterRipple';
+import WaterFalling from './WaterFalling';
+import Mapbox from './Mapbox';
+import Login from './Login';
+import { LAT, LON } from './LocationContext';
 
-function App() {
+
+
+const App = () => {
+  const [showWaterFalling, setShowWaterFalling] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowWaterFalling(true);
+      navigate('/waterfalling'); // Navigate to /waterfalling after 15 seconds
+    }, 15000); // 15 seconds
+
+    return () => clearTimeout(timer);
+  }, [navigate]);
+
   return (
+    
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route path="/mapbox" element={<Mapbox />} />
+        <Route path="/waterripple" element={<WaterRipple />} />
+        <Route path="/waterfalling" element={<WaterFalling />} />
+        <Route path="/" element={<Login />} />
+      </Routes>
+      <div className="mapbox-frame">
+        <Mapbox />
+      </div>
     </div>
+    
   );
-}
+};
 
-export default App;
+const AppWrapper = () => (
+  <Router>
+    <App />
+  </Router>
+);
+
+export default AppWrapper;

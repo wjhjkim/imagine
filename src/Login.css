@@ -1,0 +1,49 @@
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-radius: 10px; /* Add rounded corners */
+  }
+  
+  .explore-button {
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+  }
+  
+  .google-button {
+    background-color: white;
+    color: black;
+    border: none;
+    box-sizing: border-box;
+  }
+  
+  .google-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+  
+  /* Ensure both buttons have the same width */
+  .button-wrapper {
+    width: fit-content;
+    min-width: 300px; /* Set a minimum width if needed */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
