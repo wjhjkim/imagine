@@ -10,6 +10,7 @@ import LoginPage from './login_page';
 import PictureThrowLine from './picture_throw_line';
 import PictureThrowGoodLine from './picture_throw_goodline';
 import PictureThrowGreatLine from './picture_throw_greatline';
+import RandomPhoto from './random_photo';
 
 const fadeIn = keyframes`
   0% { opacity: 0; }
@@ -148,6 +149,7 @@ const Intro = () => {
                 <Route path="/picture-throw-goodline" element={<PictureThrowGoodLine />} />
                 <Route path="/picture-throw-greatline" element={<PictureThrowGreatLine />} />
                 <Route path="/login-page" element={<LoginPage />} />
+                <Route path="/random-photo" element={<RandomPhoto />} />
             </Routes>
         </Router>
     );

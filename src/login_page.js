@@ -47,7 +47,7 @@ const LoginPage = () => {
 
   return (
     <Container>
-      <Button onClick={() => navigate('/picture-throw')}>Go to Picture Throw</Button>
+      <Button onClick={() => navigate('/random-photo')}>Go to Picture Throw</Button>
       <Button>
             Login with Google
       </Button>

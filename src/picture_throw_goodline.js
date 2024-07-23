@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // 추가
+import { useNavigate, useLocation } from 'react-router-dom'; // 추가
+import { Image_list } from './imagefile';
 import './picture_throw.css';
 
 const PictureThrowGoodLine = () => {
@@ -11,18 +12,20 @@ const PictureThrowGoodLine = () => {
   const finalParticlesImageRef = useRef(null);
   const finishedParticlesRef = useRef([]);
   const history = useNavigate();
+  const location = useLocation();
+  const { photoPath } = location.state || { photoPath: null };
 
-  const imagePaths = [
-    '/glass.jpg', 
-    '/picture1.jpg',
-    '/picture2.jpg',
-    '/picture3.jpg',
-  ];
+  const imagePaths = Image_list;
 
   useEffect(() => {
     const loadImageData = async () => {
-        const randomIndex = Math.floor(Math.random() * imagePaths.length);
-        const src = imagePaths[randomIndex];
+        var src = "";
+        if (photoPath != null) {
+          src = photoPath;
+        } else {
+          const randomIndex = Math.floor(Math.random() * imagePaths.length);
+          src = imagePaths[randomIndex];
+        }
         const img = new Image();
         img.onload = () => {
             const rect = mainCanvasRef.current.getBoundingClientRect();
