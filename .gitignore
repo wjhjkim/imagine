@@ -11,12 +11,8 @@
 # production
 /build
 
-public/glass.jpg
 src/fonts/
 public/picture1.jpg
-public/picture2.jpg
-public/picture3.jpg
-public/videos/
 
 # misc
 .DS_Store

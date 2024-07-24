@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom'; // 추가
-import { Image_list } from './imagefile';
+import { Image_list } from './login';
 import './picture_throw.css';
 
 const PictureThrowGreatLine = () => {
@@ -283,6 +283,7 @@ const PictureThrowGreatLine = () => {
 
   return (
     <div className="picture-throw">
+      <button className="back-button" onClick={() => history('/random-photo')}></button>
       <canvas ref={mainCanvasRef} />
     </div>
   );

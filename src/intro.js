@@ -14,7 +14,7 @@ import RandomPhoto from './random_photo';
 import Mapbox from './Mapbox';
 import WaterRipple from './WaterRipple';
 import WaterFalling from './WaterFalling';
-import Login from './Login';
+import Login from './login';
 
 const fadeIn = keyframes`
   0% { opacity: 0; }

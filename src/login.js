@@ -2,11 +2,76 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
+var Image_list = [];
+
+Image_list = [
+    '/glass.jpg', 
+    '/picture1.jpg',
+    '/picture2.jpg',
+    '/picture3.jpg',
+    '/IMG_5300.JPG',
+    '/IMG_5301.JPG',
+    '/glass.jpg', 
+    '/picture1.jpg',
+    '/picture2.jpg',
+    '/picture3.jpg',
+    '/IMG_5300.JPG',
+    '/IMG_5301.JPG',
+    '/glass.jpg', 
+    '/picture1.jpg',
+    '/picture2.jpg',
+    '/picture3.jpg',
+    '/IMG_5300.JPG',
+    '/IMG_5301.JPG',
+    '/glass.jpg', 
+    '/picture1.jpg',
+    '/picture2.jpg',
+    '/picture3.jpg',
+    '/IMG_5300.JPG',
+    '/IMG_5301.JPG',
+    '/glass.jpg', 
+    '/picture1.jpg',
+    '/picture2.jpg',
+    '/picture3.jpg',
+    '/IMG_5300.JPG',
+    '/IMG_5301.JPG',
+    '/glass.jpg', 
+    '/picture1.jpg',
+    '/picture2.jpg',
+    '/picture3.jpg',
+    '/IMG_5300.JPG',
+    '/IMG_5301.JPG',
+    '/glass.jpg', 
+    '/picture1.jpg',
+    '/picture2.jpg',
+    '/picture3.jpg',
+    '/IMG_5300.JPG',
+    '/IMG_5301.JPG',
+    '/glass.jpg', 
+    '/picture1.jpg',
+    '/picture2.jpg',
+    '/picture3.jpg',
+    '/IMG_5300.JPG',
+    '/IMG_5301.JPG',
+    '/glass.jpg', 
+    '/picture1.jpg',
+    '/picture2.jpg',
+    '/picture3.jpg',
+    '/IMG_5300.JPG',
+    '/IMG_5301.JPG',
+    '/glass.jpg', 
+    '/picture1.jpg',
+    '/picture2.jpg',
+    '/picture3.jpg',
+    '/IMG_5300.JPG',
+    '/IMG_5301.JPG',
+];
+
 const Login = () => {
   const navigate = useNavigate();
 
   const handleExploreClick = () => {
-    navigate('/waterripple');
+    navigate('/random-photo');
   };
 
   return (
@@ -29,3 +94,4 @@ const Login = () => {
 };
 
 export default Login;
+export {Image_list};

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom'; // 추가
-import { Image_list } from './imagefile';
+import { Image_list } from './login';
 import EXIF from 'exif-js';
+import './picture_throw.css';
 
 const totallength = 89;
 var lat = 36.37416931298615;
@@ -204,7 +205,7 @@ const WaterFalling = ({ xlength = totallength, ylength = totallength }) => {
         if (currentStep < steps) {
           animationFrameIdRef.current = requestAnimationFrame(stepIncrease);
         } else {
-          setTimeout(() => decreaseRadius(index), 5000); // Start decreasing after 5 seconds
+          setTimeout(() => decreaseRadius(index), 1000); // Start decreasing after 5 seconds
         }
       };
 
@@ -226,6 +227,7 @@ const WaterFalling = ({ xlength = totallength, ylength = totallength }) => {
 
   return (
     <div className="water-ripple">
+      <button className="back-button" onClick={() => navigate('/random-photo')}></button>
       <canvas
         width={window.innerWidth}
         height={window.innerHeight}

@@ -1,6 +1,8 @@
 import React from 'react';
 
-const Image_list = [
+var Image_list = [];
+
+Image_list = [
     '/glass.jpg', 
     '/picture1.jpg',
     '/picture2.jpg',

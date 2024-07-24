@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom'; // 추가
-import { Image_list } from './imagefile';
+import { Image_list } from './login';
 import EXIF from 'exif-js';
+import './picture_throw.css';
 
 const totallength = 19;
 var lat = 36.37416931298615;
@@ -303,6 +304,7 @@ const WaterRipple = ({ xlength = totallength, ylength = totallength }) => {
 
   return (
     <div className="water-ripple">
+      <button className="back-button" onClick={() => navigate('/random-photo')}></button>
       <canvas
         onClick={handleCanvasClick}
         width={window.innerWidth}
