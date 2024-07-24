@@ -1,15 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
-import { LAT as newLat, LON as newLon} from './LocationContext';  // Assuming these values are updated dynamically
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
+let setLocationExternal;
+
 const Mapbox = () => {
-  console.log(newLat, newLon);
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
-  const [coordinates, setCoordinates] = useState({ lat: newLat, lon: newLon });
-  const [useNewCoordinates, setUseNewCoordinates] = useState(true); // Add a state to switch between coordinate sets
+  const [coordinates, setCoordinates] = useState({ lat: 36.37416931298615, lon: 127.36565860037672 });
+  const [useNewCoordinates, setUseNewCoordinates] = useState(true);
+  const [markers, setMarkers] = useState([]); // Array to store markers
 
   useEffect(() => {
     mapboxgl.accessToken = 'pk.eyJ1Ijoic3dhbmtpbSIsImEiOiJjbHl1MWl2cmcwNTViMnFwdnFhODVyMzdhIn0.KVOQyW0jDTM26vGIM_nIrQ';
@@ -46,20 +47,29 @@ const Mapbox = () => {
       zoom: 0.3
     });
 
-    new mapboxgl.Marker().setLngLat(geocode.center).addTo(mapRef.current);
+    // Remove existing markers
+    markers.forEach(marker => marker.remove());
+
+    // Add new marker
+    const newMarker = new mapboxgl.Marker().setLngLat(geocode.center).addTo(mapRef.current);
+    setMarkers([newMarker]); // Update marker state
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (useNewCoordinates) {
-        if (newLat !== coordinates.lat || newLon !== coordinates.lon) {
-          setCoordinates({ lat: newLat, lon: newLon });
+        if (coordinates.lat !== 0 || coordinates.lon !== 0) {
+          setCoordinates({ lat: coordinates.lat, lon: coordinates.lon });
         }
       }
-    }, 1000); // Check for updates every second
+    }, 1000);
 
     return () => clearInterval(interval);
   }, [coordinates, useNewCoordinates]);
+
+  useEffect(() => {
+    setLocationExternal = setCoordinates;
+  }, []);
 
   return (
     <div style={{ height: '100%' }}>
@@ -71,4 +81,12 @@ const Mapbox = () => {
   );
 };
 
+// External function to set the location
+const setLocation = (lat, lon) => {
+  if (setLocationExternal) {
+    setLocationExternal({ lat, lon });
+  }
+};
+
 export default Mapbox;
+export { setLocation };

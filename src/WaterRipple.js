@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom'; // 추가
 import { Image_list } from './login';
 import EXIF from 'exif-js';
 import './picture_throw.css';
+import { setLocation } from './Mapbox';
 
 const totallength = 19;
 var lat = 36.37416931298615;
@@ -110,6 +111,7 @@ const WaterRipple = ({ xlength = totallength, ylength = totallength }) => {
             lat = parsedLat;
             lon = parsedLon;
             console.log(`Latitude: ${lat}, Longitude: ${lon}`);
+            setLocation(lat, lon);
 
             // Optionally set the coordinates to state
             // setCoordinates({ lat, lon });

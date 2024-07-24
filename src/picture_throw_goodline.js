@@ -1,7 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom'; // 추가
+import EXIF from 'exif-js';
 import { Image_list } from './login';
-import './picture_throw.css';
+import { setLocation } from './Mapbox';
+
+var lat = 36.37416931298615;
+var lon = 127.36565860037672;
+
+const convertDMSToDD = (DMS, ref) => {
+  if (!DMS || DMS.length < 3 || !ref) return NaN;
+  const degrees = DMS[0] + DMS[1] / 60 + DMS[2] / 3600;
+  return ref === 'S' || ref === 'W' ? -degrees : degrees;
+};
+
 
 const PictureThrowGoodLine = () => {
   const [images, setImages] = useState([]);
@@ -31,6 +42,32 @@ const PictureThrowGoodLine = () => {
             const rect = mainCanvasRef.current.getBoundingClientRect();
             console.log(`Image loaded: ${src}`);
             setImages([{ src, x: rect.width / 2, y: rect.height / 2 }]);
+            
+            // Extract EXIF data
+      EXIF.getData(img, function() {
+        const latitude = EXIF.getTag(this, 'GPSLatitude');
+        const longitude = EXIF.getTag(this, 'GPSLongitude');
+        const latRef = EXIF.getTag(this, 'GPSLatitudeRef');
+        const lonRef = EXIF.getTag(this, 'GPSLongitudeRef');
+
+        if (latitude && longitude && latRef && lonRef) {
+          const parsedLat = parseFloat(convertDMSToDD(latitude, latRef));
+          const parsedLon = parseFloat(convertDMSToDD(longitude, lonRef));
+          if (!isNaN(parsedLat) && !isNaN(parsedLon)) {
+            lat = parsedLat;
+            lon = parsedLon;
+            console.log(`Latitude: ${lat}, Longitude: ${lon}`);
+            setLocation(lat, lon);
+            // Optionally set the coordinates to state
+            // setCoordinates({ lat, lon });
+          } else {
+            console.error('Invalid coordinates:', { lat: parsedLat, lon: parsedLon });
+          }
+        } else {
+          console.log('No longitude, latitude found in EXIF data');
+        }
+      });
+
         };
         img.onerror = () => {
             console.error(`Failed to load image: ${src}`);
@@ -78,6 +115,7 @@ const PictureThrowGoodLine = () => {
   };
 
   const updateParticles = () => {
+    if (!mainCanvasRef.current) return; // 추가된 null 체크
     const mainCtx = mainCanvasRef.current.getContext('2d');
     mainCtx.fillStyle = '#14141B';
     mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
@@ -118,7 +156,7 @@ const PictureThrowGoodLine = () => {
 
   const createBlackParticles = () => {
     const particles = [];
-    const particleCount = 2000;
+    const particleCount = 500;
     const canvasWidth = mainCanvasRef.current.width;
     const canvasHeight = mainCanvasRef.current.height;
 
@@ -131,7 +169,7 @@ const PictureThrowGoodLine = () => {
         y: randomY,
         dx: 0,
         dy: 0,
-        size: Math.random() * 15 + 5,
+        size: Math.random() * 15,
         life: 100,
         color: '#14141B'
       });
@@ -142,6 +180,7 @@ const PictureThrowGoodLine = () => {
   };
 
   const updateBlackParticles = () => {
+    if (!mainCanvasRef.current) return; // 추가된 null 체크
     const mainCtx = mainCanvasRef.current.getContext('2d');
     // mainCtx.clearRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
@@ -149,7 +188,7 @@ const PictureThrowGoodLine = () => {
       p.x += p.dx;
       p.y += p.dy;
       p.life -= 1;
-      p.size *= 1.01
+      p.size *= 1.04
 
       mainCtx.fillStyle = p.color;
       mainCtx.beginPath();

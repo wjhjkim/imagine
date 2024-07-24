@@ -4,7 +4,7 @@ import './App.css';
 import WaterRipple from './WaterRipple';
 import WaterFalling from './WaterFalling';
 import Mapbox from './Mapbox';
-import Login from './Login';
+import Login from './login';
 import { LAT, LON } from './LocationContext';
 
 
