@@ -6,7 +6,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleExploreClick = () => {
-    navigate('/random-photo');
+    navigate('/waterripple');
   };
 
   return (
