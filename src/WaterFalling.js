@@ -148,37 +148,6 @@ const WaterFalling = ({ xlength = totallength, ylength = totallength }) => {
 
       if (currentStep < steps) {
         animationFrameIdRef.current = requestAnimationFrame(stepDecrease);
-      } else {
-        var path = "";
-        switch(Math.floor(Math.random() * 7)) {
-          case 0 :
-              path = "/picture-throw-greatline";
-              break;
-          case 1 :
-              path = "/picture-throw-watercolor";
-              break;
-          case 2 :
-              path = "/picture-throw-changecolor";
-              break;
-          case 3 :
-              path = "/picture-throw-line";
-              break;
-          case 4 :
-              path = "/picture-throw-goodline";
-              break;
-          case 5 :
-              path = "/waterripple";
-              break;
-          case 6 :
-              path = "/picture-throw";
-              break;
-          default :
-              path = "/picture-throw-greatline";
-        }
-
-        setTimeout(() => {
-          navigate(path);
-        }, 1000);
       }
     };
 
@@ -219,6 +188,36 @@ const WaterFalling = ({ xlength = totallength, ylength = totallength }) => {
     for (let i = 0; i < numCircles; i++) {
       animateIncrease(i);
     }
+    var path = "";
+        switch(Math.floor(Math.random() * 7)) {
+          case 0 :
+              path = "/picture-throw-greatline";
+              break;
+          case 1 :
+              path = "/picture-throw-watercolor";
+              break;
+          case 2 :
+              path = "/picture-throw-changecolor";
+              break;
+          case 3 :
+              path = "/picture-throw-line";
+              break;
+          case 4 :
+              path = "/picture-throw-goodline";
+              break;
+          case 5 :
+              path = "/waterripple";
+              break;
+          case 6 :
+              path = "/picture-throw";
+              break;
+          default :
+              path = "/picture-throw-greatline";
+        }
+
+        setTimeout(() => {
+          navigate(path);
+        }, 1000);
   }, [numCircles, decreaseRadius]);
 
   useEffect(() => {

@@ -15,7 +15,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #14141B;
+  background-color: black;
 `;
 
 const Button = styled.button`

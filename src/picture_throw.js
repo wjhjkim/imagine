@@ -109,7 +109,7 @@ const PictureThrowWaterColor = () => {
   const updateParticles = () => {
     if (!mainCanvasRef.current) return; // 추가된 null 체크
     const mainCtx = mainCanvasRef.current.getContext('2d');
-    mainCtx.fillStyle = '#14141B';
+    mainCtx.fillStyle = 'black';
     mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
     if (finalParticlesImageRef.current) {
@@ -165,7 +165,7 @@ const PictureThrowWaterColor = () => {
         dy: Math.sin(angle) * speed,
         size: Math.random() * 15,
         life: 300,
-        color: '#14141B'
+        color: 'black'
       });
     }
 
@@ -196,7 +196,7 @@ const PictureThrowWaterColor = () => {
       requestAnimationFrame(updateBlackParticles);
     } else {
       setIsFadingOut(false);
-      mainCtx.fillStyle = '#14141B';
+      mainCtx.fillStyle = 'black';
       mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
       var path = "";

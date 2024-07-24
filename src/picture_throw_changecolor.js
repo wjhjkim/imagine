@@ -117,7 +117,7 @@ const PictureThrowWaterColor = () => {
     const mainCtx = mainCanvasRef.current.getContext('2d');
     const backgroundImage = backgroundImageRef.current;
 
-    mainCtx.fillStyle = '#14141B';
+    mainCtx.fillStyle = 'black';
     mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
     if (finalParticlesImageRef.current) {
@@ -180,7 +180,7 @@ const PictureThrowWaterColor = () => {
         dy: Math.sin(angle) * speed,
         size: Math.random() * 15,
         life: 200,
-        color: '#14141B'
+        color: 'black'
       });
     }
 
@@ -208,7 +208,7 @@ const PictureThrowWaterColor = () => {
     if (particlesRef.current.length > 0) {
       requestAnimationFrame(updateBlackParticles);
     } else {
-      mainCtx.fillStyle = '#14141B';
+      mainCtx.fillStyle = 'black';
       mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
       var path = "";

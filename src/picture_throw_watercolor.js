@@ -113,7 +113,7 @@ const PictureThrowWaterColor = () => {
     const backgroundImage = backgroundImageRef.current;
 
     // 배경 이미지 그리기
-    mainCtx.fillStyle = '#14141B';
+    mainCtx.fillStyle = 'black';
     mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
     // mainCtx.filter = 'blur(10px)';  // 블러 필터 적용
     // mainCtx.drawImage(backgroundImage, 0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
@@ -176,7 +176,7 @@ const PictureThrowWaterColor = () => {
         dy: 1 + (4 + 0.005 * (particleCount / 2 - i)) * randomval,
         size: Math.random() * 15 + 5,
         life: 200,
-        color: '#14141B'
+        color: 'black'
       });
     }
 
@@ -190,7 +190,7 @@ const PictureThrowWaterColor = () => {
         dy: 1 + (4 + 0.005 * (particleCount - i)) * randomval,
         size: Math.random() * 15 + 5,
         life: 200,
-        color: '#14141B'
+        color: 'black'
       });
     }
 
@@ -220,7 +220,7 @@ const PictureThrowWaterColor = () => {
     if (particlesRef.current.length > 0) {
       requestAnimationFrame(updateBlackParticles);
     } else {
-      mainCtx.fillStyle = '#14141B';
+      mainCtx.fillStyle = 'black';
       mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
       // 1초 뒤에 PictureThrow 화면으로 전환

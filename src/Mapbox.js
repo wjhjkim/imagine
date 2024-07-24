@@ -16,7 +16,7 @@ const Mapbox = () => {
     mapboxgl.accessToken = 'pk.eyJ1Ijoic3dhbmtpbSIsImEiOiJjbHl1MWl2cmcwNTViMnFwdnFhODVyMzdhIn0.KVOQyW0jDTM26vGIM_nIrQ';
     mapRef.current = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: 'mapbox://styles/mapbox/satellite-streets-v12',
+      style: 'mapbox://styles/mapbox/dark-v11',
       center: [127.36565860037672, 36.37416931298615],
       zoom: 0.1
     });

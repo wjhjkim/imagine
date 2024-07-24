@@ -114,7 +114,7 @@ const PictureThrowLine = () => {
   const updateParticles = () => {
     if (!mainCanvasRef.current) return; // 추가된 null 체크
     const mainCtx = mainCanvasRef.current.getContext('2d');
-    mainCtx.fillStyle = '#14141B';
+    mainCtx.fillStyle = 'black';
     mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
     if (finalParticlesImageRef.current) {
@@ -174,7 +174,7 @@ const PictureThrowLine = () => {
         dy: (randomY-randomYY)/150,
         size: Math.random() * 15,
         life: 200,
-        color: '#14141B'
+        color: 'black'
       });
     }
 
@@ -205,7 +205,7 @@ const PictureThrowLine = () => {
       requestAnimationFrame(updateBlackParticles);
     } else {
       setIsFadingOut(false);
-      mainCtx.fillStyle = '#14141B';
+      mainCtx.fillStyle = 'black';
       mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
       var path = "";

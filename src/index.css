@@ -28,7 +28,7 @@ body, html, #root {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #14141B;
+  background-color: black;
 }
 
 .custom-font {

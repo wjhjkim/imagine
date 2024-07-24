@@ -116,7 +116,7 @@ const PictureThrowGreatLine = () => {
   const updateParticles = () => {
     if (!mainCanvasRef.current) return; // 추가된 null 체크
     const mainCtx = mainCanvasRef.current.getContext('2d');
-    mainCtx.fillStyle = '#14141B';
+    mainCtx.fillStyle = 'black';
     mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
     if (finalParticlesImageRef.current) {
@@ -169,22 +169,22 @@ const PictureThrowGreatLine = () => {
         particles.push({
             x: x,
             y: y,
-            dx: canvasHeight / 400,
-            dy: canvasWidth / -400,
+            dx: canvasHeight / 200,
+            dy: canvasWidth / -200,
             size: 8,
-            life: 200,
-            color: '#14141B'
+            life: 100,
+            color: 'black'
           });
       }
       else {
         particles.push({
             x: x,
             y: y,
-            dx: canvasWidth / -400,
-            dy: canvasHeight / 400,
+            dx: canvasWidth / -200,
+            dy: canvasHeight / 200,
             size: 8,
-            life: 200,
-            color: '#14141B'
+            life: 100,
+            color: 'black'
           });
       }
     }
@@ -216,7 +216,7 @@ const PictureThrowGreatLine = () => {
       requestAnimationFrame(updateBlackParticles);
     } else {
       setIsFadingOut(false);
-      mainCtx.fillStyle = '#14141B';
+      mainCtx.fillStyle = 'black';
       mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
       var path = "";

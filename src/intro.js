@@ -15,6 +15,24 @@ import Mapbox from './Mapbox';
 import WaterRipple from './WaterRipple';
 import WaterFalling from './WaterFalling';
 import Login from './login';
+import YouTube from 'react-youtube';
+
+const opts = {
+    height: '0',
+    width: '0',
+    playerVars: {
+      // https://developers.google.com/youtube/player_parameters
+      autoplay: 0,
+      modestbranding: 1,
+      rel: 0,
+    },
+  };
+
+  const onReady = (event) => {
+    console.log("외안돼");
+    // access to player in all event handlers via event.target
+    event.target.playVideo();
+  };
 
 const fadeIn = keyframes`
   0% { opacity: 0; }
@@ -32,7 +50,7 @@ const Background = styled.div`
   align-items: center;
   height: 100vh;
   width: 100vw;
-  background-color: #14141B;
+  background-color: black;
   position: relative;
   overflow: hidden; /* Ensure no scrolling */
 `;
@@ -40,7 +58,7 @@ const Background = styled.div`
 const Video = styled.video`
   position: absolute;
   z-index: 1;
-  width: 40%;
+  width: 70%;
   height: auto;
   cursor: ${props => (props.videoEnded ? 'pointer' : 'default')};
   ${props =>
@@ -64,7 +82,7 @@ const Landing = () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             const mainCtx = canvas.getContext('2d');
-            mainCtx.fillStyle = '#14141B';
+            mainCtx.fillStyle = 'black';
             mainCtx.fillRect(0, 0, canvas.width, canvas.height);
         }
     };
@@ -122,7 +140,7 @@ const Landing = () => {
                     <canvas ref={mainCanvasRef} style={{ position: 'absolute', top: 0, left: 0, zIndex: 0 }}></canvas>
                     <Video
                         ref={nodeRef}
-                        src="/videos/Imagine_logo.mp4"
+                        src="/videos/Imagine_logo2.mp4"
                         style={{
                             ...transitionStyles[state],
                         }}
@@ -159,9 +177,27 @@ const Intro = () => {
                 <Route path="/waterripple" element={<WaterRipple />} />
                 <Route path="/waterfalling" element={<WaterFalling />} />
             </Routes>
+            <YouTube videoId="PLu2xtDrxt1SXU7hGJUqypKqNv2FRGLByM" opts={{
+    height: '5',
+    width: '5',
+    playerVars: {
+      autoplay: 1,
+      modestbranding: 1,
+      rel: 0,
+      loop: 1,
+      start: 0,
+      fs: 0,
+      list: 'PLu2xtDrxt1SXU7hGJUqypKqNv2FRGLByM',
+      listType: 'playlist',
+    },
+  }} onReady={(event) => {
+    console.log("외안돼");
+    // access to player in all event handlers via event.target
+    event.target.playVideo();
+  }} onEnd={(e)=>{e.target.playVideo();}} />
             <div className="mapbox-frame">
-        <Mapbox />
-      </div>
+                <Mapbox />
+            </div>
         </Router>
     );
 };
