@@ -188,12 +188,12 @@ const PictureThrowWaterColor = () => {
 
       // 1초 뒤에 PictureThrow 화면으로 전환
       var path = "";
-      switch(Math.floor(Math.random() * 5)) {
+      switch(Math.floor(Math.random() * 7)) {
         case 0 :
-            path = "/picture-throw";
+            path = "/picture-throw-greatline";
             break;
         case 1 :
-            path = "/picture-throw-greatline";
+            path = "/waterfalling";
             break;
         case 2 :
             path = "/picture-throw-changecolor";
@@ -203,6 +203,12 @@ const PictureThrowWaterColor = () => {
             break;
         case 4 :
             path = "/picture-throw-goodline";
+            break;
+        case 5 :
+            path = "/waterripple";
+            break;
+        case 6 :
+            path = "/waterfalling";
             break;
         default :
             path = "/picture-throw";

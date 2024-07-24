@@ -1,14 +1,25 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom'; // 추가
+import { Image_list } from './imagefile';
 import EXIF from 'exif-js';
 
 const totallength = 19;
 var lat = 36.37416931298615;
 var lon = 127.36565860037672;
 
-const rootImageUrl = '/IMG_5299.JPG'; // Replace with the path to your root image
-
 const WaterRipple = ({ xlength = totallength, ylength = totallength }) => {
   const numCircles = (xlength + 1) * (ylength + 1);
+
+  const location = useLocation();
+  const { photoPath } = location.state || { photoPath: null };
+  const imagePaths = Image_list;
+  var rootImageUrl = "";
+  if (photoPath != null) {
+    rootImageUrl = photoPath;
+  } else {
+    const randomIndex = Math.floor(Math.random() * imagePaths.length);
+    rootImageUrl = imagePaths[randomIndex];
+  }
 
   // Generate corner positions using useMemo to avoid recalculating on every render
   const corners = useMemo(() => {
@@ -53,6 +64,7 @@ const WaterRipple = ({ xlength = totallength, ylength = totallength }) => {
   const [allCirclesReached, setAllCirclesReached] = useState(false);
   const [circleRadii, setCircleRadii] = useState(Array(numCircles).fill(4 * (Math.random() * 2 + 1)));
   const [resetCircles, setResetCircles] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (hiddenCanvasRef.current) {
@@ -254,6 +266,37 @@ const WaterRipple = ({ xlength = totallength, ylength = totallength }) => {
         clearInterval(intervalId, intervalId1);
         setAllCirclesReached(false);
         setResetCircles(false);
+        var path = "";
+        switch(Math.floor(Math.random() * 7)) {
+          case 0 :
+              path = "/picture-throw-greatline";
+              break;
+          case 1 :
+              path = "/picture-throw-watercolor";
+              break;
+          case 2 :
+              path = "/picture-throw-changecolor";
+              break;
+          case 3 :
+              path = "/picture-throw-line";
+              break;
+          case 4 :
+              path = "/picture-throw-goodline";
+              break;
+          case 5 :
+              path = "/waterfalling";
+              break;
+          case 6 :
+              path = "/picture-throw";
+              break;
+          default :
+              path = "/picture-throw-greatline";
+        }
+  
+  
+        setTimeout(() => {
+          navigate(path);
+        }, 1000);
       }, duration);
     }
   }, [resetCircles, numCircles]);

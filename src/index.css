@@ -34,3 +34,19 @@ body, html, #root {
 .custom-font {
   font-family: "EduAUVICWANTHand-VariableFont_wght";
 }
+
+.mapbox-frame {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 200px;
+  height: 200px;
+  /* border: 2px solid white; */
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.mapbox-container {
+  width: 100%;
+  height: 100%;
+}

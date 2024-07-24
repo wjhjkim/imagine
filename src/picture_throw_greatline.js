@@ -182,9 +182,9 @@ const PictureThrowGreatLine = () => {
       mainCtx.fillRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
       var path = "";
-      switch(Math.floor(Math.random() * 5)) {
+      switch(Math.floor(Math.random() * 7)) {
         case 0 :
-            path = "/picture-throw";
+            path = "/waterfalling";
             break;
         case 1 :
             path = "/picture-throw-watercolor";
@@ -197,6 +197,12 @@ const PictureThrowGreatLine = () => {
             break;
         case 4 :
             path = "/picture-throw-goodline";
+            break;
+        case 5 :
+            path = "/waterripple";
+            break;
+        case 6 :
+            path = "/picture-throw";
             break;
         default :
             path = "/picture-throw";
