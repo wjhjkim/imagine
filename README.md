@@ -17,7 +17,7 @@
 
 이 프로젝트가 사람들이 잊고 있던 소중한 기억을 떠올리는 계기가 되기를 바랍니다.
 
-기술 스택: Front: React. Back: Node.js
+기술 스택: Front: React. Back: Node.js, 에프터이펙트, 피그마, Samsung Studio 등...
 
 ## 팀원 소개
 
