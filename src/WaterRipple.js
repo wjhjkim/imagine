@@ -5,7 +5,7 @@ import EXIF from 'exif-js';
 import './picture_throw.css';
 import { setLocation } from './Mapbox';
 
-const totallength = 19;
+const totallength = 89;
 var lat = 36.37416931298615;
 var lon = 127.36565860037672;
 
@@ -13,8 +13,11 @@ const WaterRipple = ({ xlength = totallength, ylength = totallength }) => {
   const numCircles = (xlength + 1) * (ylength + 1);
 
   const location = useLocation();
-  const { photoPath } = location.state || { photoPath: null };
-  const imagePaths = Image_list;
+  // const { photoPath } = location.state || { photoPath: null };
+  const photoPath = location.state.value1;
+  const imgs = location.state.value2;
+
+  const imagePaths = imgs === null? Image_list : imgs;
   var rootImageUrl = "";
   if (photoPath != null) {
     rootImageUrl = photoPath;
@@ -72,16 +75,30 @@ const WaterRipple = ({ xlength = totallength, ylength = totallength }) => {
     if (hiddenCanvasRef.current) {
       hiddenCanvasCtxRef.current = hiddenCanvasRef.current.getContext('2d');
     }
+    // var src = "";
+    //     if (photoPath != null) {
+    //       src = photoPath;
+    //     } else {
+    //       const randomIndex = Math.floor(Math.random() * imagePaths.length);
+    //       src = imagePaths[randomIndex];
+    //     }
+    //     const img = new Image();
+    //     img.onload = () => {
+    //         const ctx = hiddenCanvasCtxRef.current;
+    //         const rect = hiddenCanvasRef.current.getBoundingClientRect();
+    //         console.log(`Image loaded: ${src}`);
+    //         setImage([{ src, x: rect.width / 2, y: rect.height / 2 }]);
 
     const img = new Image();
+    img.crossOrigin = "Anonymous";
     img.onload = () => {
       const ctx = hiddenCanvasCtxRef.current;
       if (ctx) {
         hiddenCanvasRef.current.width = img.width;
         hiddenCanvasRef.current.height = img.height;
         ctx.drawImage(img, 0, 0);
-        setImage(img);
-        setImageSize({ width: img.width, height: img.height });
+        console.log(`Image loaded: ${rootImageUrl}`);
+        setImage([{ rootImageUrl, x: hiddenCanvasRef.current.width / 2, y: hiddenCanvasRef.current.height / 2 }]);
         setImageFalling(true);
 
         // Extract colors and stroke widths from the image
@@ -145,7 +162,7 @@ const WaterRipple = ({ xlength = totallength, ylength = totallength }) => {
           return position;
         } else {
           const angle = Math.atan2(dy, dx);
-          const speed = 0.03 * distance;
+          const speed = 0.08 * distance;
           allCirclesReached = false;
           return {
             x: position.x + speed * Math.cos(angle),
@@ -219,8 +236,8 @@ const WaterRipple = ({ xlength = totallength, ylength = totallength }) => {
 
   useEffect(() => {
     if (allCirclesReached) {
-      const duration = 2000; // 5 seconds
-      const interval = 50; // Update every 50ms
+      const duration = 1000; // 2 seconds
+      const interval = 100; // Update every 50ms
       const steps = duration / interval;
       setTimeout(() => {
         clearInterval();
@@ -231,8 +248,8 @@ const WaterRipple = ({ xlength = totallength, ylength = totallength }) => {
 
   useEffect(() => {
     if (resetCircles) {
-      const duration = 5000; // 10 seconds to move back to the center
-      const interval = 50; // Update every 50ms
+      const duration = 2000; // 10 seconds to move back to the center
+      const interval = 10; // Update every 50ms
       const steps = duration / interval;
       const decrement = circleRadii.map(r => r / steps);
 
@@ -298,8 +315,8 @@ const WaterRipple = ({ xlength = totallength, ylength = totallength }) => {
   
   
         setTimeout(() => {
-          navigate(path);
-        }, 1000);
+          navigate(path, { state: { value1: null, value2: imgs } });
+        }, 0);
       }, duration);
     }
   }, [resetCircles, numCircles]);
