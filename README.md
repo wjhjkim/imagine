@@ -19,10 +19,6 @@
 
 기술 스택: Front: React. Back: Node.js
 
-전체 시연 영상
-
-https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/ea733ceb-180d-4319-b4c3-16ba912bc930/%EC%8B%9C%EC%97%B0%EC%98%81%EC%83%81_%ED%92%80%EC%98%81%EC%83%81.mp4
-
 ## 팀원 소개
 
 ---
@@ -39,7 +35,7 @@ https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d
 - 제작자가 선정한 노래 플레이리스트의 시작과 함께 로고 애니메이션이 시작됩니다.
 - 로고 애니메이션이 끝난 뒤 로고를 눌러 모드 선택 페이지로 들어갈 수 있습니다.
 
-https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/841f56bd-9725-452e-8b86-e56106967aac/%EC%8B%9C%EC%97%B0%EC%98%81%EC%83%81_%EC%9D%B8%ED%8A%B8%EB%A1%9C.mp4
+https://github.com/user-attachments/assets/7fb8327b-e402-47f9-9b78-5234d86c3191
 
 ### 1. 모드 선택 페이지
 
@@ -47,14 +43,14 @@ https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d
     - 제작자 사진 모드를 선택할 경우 제작자가 선정한 사진들로 2번 이후의 페이지들이 전개됩니다.
     - 사용자 사진 모드를 선택할 경우 사용자의 구글 포토의 사진들로 2번 이후의 페이지들이 전개됩니다.
 
-https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/246007a3-47da-4f39-8cf6-fb5d34bf3451/%EC%8B%9C%EC%97%B0%EC%98%81%EC%83%81_%EB%B2%84%ED%8A%BC.mp4
+https://github.com/user-attachments/assets/f726f0e1-cb1d-43dc-99e7-cbaf61ea504a
 
 ### 2. 사진 선택 페이지
 
 - 고른 모드를 통해 가져온 사진들을 랜덤으로 화면에 띄어 줍니다.
 - 사용자는 원하는 사진을 눌러 그 사진을 전체 화면에 띄울 수 있습니다.
 
-https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/1a85387f-fa37-4dc9-acb0-e25dcce0168e/%EC%8B%9C%EC%97%B0%EC%98%81%EC%83%81_%ED%99%94%EB%A9%B4_%ED%8E%98%EC%9D%B4%EC%A7%80.mp4
+https://github.com/user-attachments/assets/dc110c0c-d509-48bd-a564-b439fbe48b1d
 
 ### 3. 상세 효과 페이지
 
@@ -62,34 +58,34 @@ https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d
     - 8가지 효과 중 랜덤으로 선택됩니다.
         1. 폭발 효과
             
-            <img src= https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/aa48affd-823b-4ac5-a933-309624e48fdd/explotion.jpg width="200" height="400"/>
+            <img src= https://github.com/user-attachments/assets/c81f1160-e5a9-468f-9ac0-dc018b971aba width="200" height="400"/>
             
         2. 수채화 효과
             
-            <img src= https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/24dce49d-8eb1-45e4-a98d-d68d3603791a/watercolor.jpg width="200" height="400"/>
+            <img src= https://github.com/user-attachments/assets/f6cd2b20-fa2c-416f-aa66-0dbe6d2bdf6d width="200" height="400"/>
             
         3. 픽셀화 효과
             
-            <img src= https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/f8480779-6ca0-4f4d-aafd-c398c40b8c7c/changecolor.jpg width="200" height="400"/>
+            <img src= https://github.com/user-attachments/assets/1c51e212-736c-48c1-808e-66dba9b8c5ab width="200" height="400"/>
             
         4. 선 효과: 무작위 배열
             
-            <img src= https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/bf8e4b66-7e3e-4d96-a78f-564b4edfe451/line.jpg width="200" height="400"/>
+            <img src= https://github.com/user-attachments/assets/c238276e-9099-4a99-b95d-6b4c86587de9 width="200" height="400"/>
             
         5. 선 효과: 파도 배열
             
-            <img src= https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/2b95c09b-9aae-4939-aa6b-0278f0c3bd46/goodline.jpg width="200" height="400"/>
+            <img src= https://github.com/user-attachments/assets/b0e22fe4-b3e8-4feb-b247-ab76b1750d1d width="200" height="400"/>
             
         6. 선 효과: 직선 배열
             
-            <img src= https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/83c51649-9dbc-4eb1-be43-8851a246cc1a/greatline.jpg width="200" height="400"/>
+            <img src= https://github.com/user-attachments/assets/62cefbc0-d172-4c55-b684-f3c990acfbca width="200" height="400"/>
             
         7. 빗물 효과
             
-            <img src= https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/c57fc714-4b7d-41d6-a0d5-4ca0c09f0b6c/waterfalling.jpg width="200" height="400"/>
+            <img src= https://github.com/user-attachments/assets/71e398da-b900-4119-b821-72c3b35629b4 width="200" height="400"/>
             
         8. 점묘화 효과
             
-            <img src= https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/673566f3-4568-49d8-a2f4-c728b7aacfb2/waterripple.jpg width="200" height="400"/>
+            <img src= https://github.com/user-attachments/assets/8405a7e5-c9ef-42da-b2e7-157da0e871a2 width="200" height="400"/>
             
 - 효과가 끝난 뒤 약 1초 후 화면이 지워진 이후 다른 효과로 넘어가게 됩니다.
