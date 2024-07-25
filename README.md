@@ -58,34 +58,34 @@ https://github.com/user-attachments/assets/dc110c0c-d509-48bd-a564-b439fbe48b1d
     - 8가지 효과 중 랜덤으로 선택됩니다.
         1. 폭발 효과
             
-            <img src= https://github.com/user-attachments/assets/c81f1160-e5a9-468f-9ac0-dc018b971aba width="200" height="400"/>
+            <img src= https://github.com/user-attachments/assets/c81f1160-e5a9-468f-9ac0-dc018b971aba width="700" height="400"/>
             
         2. 수채화 효과
             
-            <img src= https://github.com/user-attachments/assets/f6cd2b20-fa2c-416f-aa66-0dbe6d2bdf6d width="200" height="400"/>
+            <img src= https://github.com/user-attachments/assets/f6cd2b20-fa2c-416f-aa66-0dbe6d2bdf6d width="700" height="400"/>
             
         3. 픽셀화 효과
             
-            <img src= https://github.com/user-attachments/assets/1c51e212-736c-48c1-808e-66dba9b8c5ab width="200" height="400"/>
+            <img src= https://github.com/user-attachments/assets/1c51e212-736c-48c1-808e-66dba9b8c5ab width="700" height="400"/>
             
         4. 선 효과: 무작위 배열
             
-            <img src= https://github.com/user-attachments/assets/c238276e-9099-4a99-b95d-6b4c86587de9 width="200" height="400"/>
+            <img src= https://github.com/user-attachments/assets/c238276e-9099-4a99-b95d-6b4c86587de9 width="700" height="400"/>
             
         5. 선 효과: 파도 배열
             
-            <img src= https://github.com/user-attachments/assets/b0e22fe4-b3e8-4feb-b247-ab76b1750d1d width="200" height="400"/>
+            <img src= https://github.com/user-attachments/assets/b0e22fe4-b3e8-4feb-b247-ab76b1750d1d width="700" height="400"/>
             
         6. 선 효과: 직선 배열
             
-            <img src= https://github.com/user-attachments/assets/62cefbc0-d172-4c55-b684-f3c990acfbca width="200" height="400"/>
+            <img src= https://github.com/user-attachments/assets/62cefbc0-d172-4c55-b684-f3c990acfbca width="700" height="400"/>
             
         7. 빗물 효과
             
-            <img src= https://github.com/user-attachments/assets/71e398da-b900-4119-b821-72c3b35629b4 width="200" height="400"/>
+            <img src= https://github.com/user-attachments/assets/71e398da-b900-4119-b821-72c3b35629b4 width="700" height="400"/>
             
         8. 점묘화 효과
             
-            <img src= https://github.com/user-attachments/assets/8405a7e5-c9ef-42da-b2e7-157da0e871a2 width="200" height="400"/>
+            <img src= https://github.com/user-attachments/assets/8405a7e5-c9ef-42da-b2e7-157da0e871a2 width="700" height="400"/>
             
 - 효과가 끝난 뒤 약 1초 후 화면이 지워진 이후 다른 효과로 넘어가게 됩니다.
