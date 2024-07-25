@@ -13,8 +13,11 @@ const WaterRipple = ({ xlength = totallength, ylength = totallength }) => {
   const numCircles = (xlength + 1) * (ylength + 1);
 
   const location = useLocation();
-  const { photoPath } = location.state || { photoPath: null };
-  const imagePaths = Image_list;
+  // const { photoPath } = location.state || { photoPath: null };
+  const photoPath = location.state.value1;
+  const imgs = location.state.value2;
+
+  const imagePaths = imgs === null? Image_list : imgs;
   var rootImageUrl = "";
   if (photoPath != null) {
     rootImageUrl = photoPath;
@@ -72,6 +75,19 @@ const WaterRipple = ({ xlength = totallength, ylength = totallength }) => {
     if (hiddenCanvasRef.current) {
       hiddenCanvasCtxRef.current = hiddenCanvasRef.current.getContext('2d');
     }
+    // var src = "";
+    //     if (photoPath != null) {
+    //       src = photoPath;
+    //     } else {
+    //       const randomIndex = Math.floor(Math.random() * imagePaths.length);
+    //       src = imagePaths[randomIndex];
+    //     }
+    //     const img = new Image();
+    //     img.onload = () => {
+    //         const ctx = hiddenCanvasCtxRef.current;
+    //         const rect = hiddenCanvasRef.current.getBoundingClientRect();
+    //         console.log(`Image loaded: ${src}`);
+    //         setImage([{ src, x: rect.width / 2, y: rect.height / 2 }]);
 
     const img = new Image();
     img.onload = () => {
@@ -80,8 +96,8 @@ const WaterRipple = ({ xlength = totallength, ylength = totallength }) => {
         hiddenCanvasRef.current.width = img.width;
         hiddenCanvasRef.current.height = img.height;
         ctx.drawImage(img, 0, 0);
-        setImage(img);
-        setImageSize({ width: img.width, height: img.height });
+        console.log(`Image loaded: ${rootImageUrl}`);
+        setImage([{ rootImageUrl, x: hiddenCanvasRef.current.width / 2, y: hiddenCanvasRef.current.height / 2 }]);
         setImageFalling(true);
 
         // Extract colors and stroke widths from the image
@@ -298,7 +314,7 @@ const WaterRipple = ({ xlength = totallength, ylength = totallength }) => {
   
   
         setTimeout(() => {
-          navigate(path);
+          navigate(path, { state: { value1: null, value2: imgs } });
         }, 0);
       }, duration);
     }

@@ -23,9 +23,11 @@ const PictureThrowWaterColor = () => {
   const backgroundImageRef = useRef(new Image());
   const history = useNavigate();
   const location = useLocation();
-  const { photoPath } = location.state || { photoPath: null };
+  const photoPath = location.state.value1;
+  const imgs = location.state.value2;
 
-  const imagePaths = Image_list;
+
+  const imagePaths = imgs === null? Image_list : imgs;
 
   useEffect(() => {
     const loadImageData = async () => {
@@ -240,7 +242,7 @@ const PictureThrowWaterColor = () => {
 
 
       setTimeout(() => {
-        history(path);
+        history(path, { state: { value1: null, value2: imgs } });
       }, 1000);
     }
   };
