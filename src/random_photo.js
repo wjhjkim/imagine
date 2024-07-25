@@ -138,8 +138,7 @@ const RandomPhoto = () => {
       navigate("/waterfalling", { state: { value1: photoPath, value2: photos } });
     }, 1500);
   };
-
-  //paths[Math.floor(Math.random() * paths.length)]
+//paths[Math.floor(Math.random() * paths.length)]
 
   const fori = Math.floor(photos.length / radii.length);
 

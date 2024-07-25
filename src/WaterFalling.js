@@ -16,11 +16,11 @@ const WaterFalling = ({ xlength = totallength, ylength = totallength }) => {
   const location = useLocation();
   const photoPath = location.state.value1;
   const imgs = location.state.value2;
-  const imagePaths = imgs === null ? Image_list : imgs;
-  let rootImageUrl = "";
-  if (photoPath) {
+
+  const imagePaths = imgs === null? Image_list : imgs;
+  var rootImageUrl = "";
+  if (photoPath != null) {
     rootImageUrl = photoPath;
-    upload = 1;
   } else {
     const randomIndex = Math.floor(Math.random() * imagePaths.length);
     rootImageUrl = imagePaths[randomIndex];
@@ -87,7 +87,6 @@ const WaterFalling = ({ xlength = totallength, ylength = totallength }) => {
         const imgY = Math.floor((y / window.innerHeight) * img.height);
         if (imgX >= 0 && imgX < img.width && imgY >= 0 && imgY < img.height) {
           const pixel = ctx.getImageData(imgX, imgY, 1, 1).data;
-          console.log(`Pixel at (${imgX}, ${imgY}):`, pixel);
           return {
             color: `rgba(${pixel[0]}, ${pixel[1]}, ${pixel[2]}, ${pixel[3] / 255})`,
             strokeWidth: Math.random() * 10 + 1,

@@ -90,6 +90,7 @@ const WaterRipple = ({ xlength = totallength, ylength = totallength }) => {
     //         setImage([{ src, x: rect.width / 2, y: rect.height / 2 }]);
 
     const img = new Image();
+    img.crossOrigin = "Anonymous";
     img.onload = () => {
       const ctx = hiddenCanvasCtxRef.current;
       if (ctx) {
