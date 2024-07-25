@@ -5,7 +5,7 @@ import EXIF from 'exif-js';
 import './picture_throw.css';
 import { setLocation } from './Mapbox';
 
-const totallength = 19;
+const totallength = 89;
 var lat = 36.37416931298615;
 var lon = 127.36565860037672;
 
@@ -145,7 +145,7 @@ const WaterRipple = ({ xlength = totallength, ylength = totallength }) => {
           return position;
         } else {
           const angle = Math.atan2(dy, dx);
-          const speed = 0.03 * distance;
+          const speed = 0.08 * distance;
           allCirclesReached = false;
           return {
             x: position.x + speed * Math.cos(angle),
@@ -219,8 +219,8 @@ const WaterRipple = ({ xlength = totallength, ylength = totallength }) => {
 
   useEffect(() => {
     if (allCirclesReached) {
-      const duration = 2000; // 5 seconds
-      const interval = 50; // Update every 50ms
+      const duration = 1000; // 2 seconds
+      const interval = 100; // Update every 50ms
       const steps = duration / interval;
       setTimeout(() => {
         clearInterval();
@@ -231,8 +231,8 @@ const WaterRipple = ({ xlength = totallength, ylength = totallength }) => {
 
   useEffect(() => {
     if (resetCircles) {
-      const duration = 5000; // 10 seconds to move back to the center
-      const interval = 50; // Update every 50ms
+      const duration = 2000; // 10 seconds to move back to the center
+      const interval = 10; // Update every 50ms
       const steps = duration / interval;
       const decrement = circleRadii.map(r => r / steps);
 
@@ -299,7 +299,7 @@ const WaterRipple = ({ xlength = totallength, ylength = totallength }) => {
   
         setTimeout(() => {
           navigate(path);
-        }, 1000);
+        }, 0);
       }, duration);
     }
   }, [resetCircles, numCircles]);

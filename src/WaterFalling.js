@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Image_list } from './login';
+import {photos} from './random_photo';
 import EXIF from 'exif-js';
 import './picture_throw.css';
 import { setLocation } from './Mapbox';
@@ -13,14 +14,18 @@ const WaterFalling = ({ xlength = totallength, ylength = totallength }) => {
   const numCircles = (xlength + 1) * (ylength + 1);
 
   const location = useLocation();
-  const { photoPath } = location.state || { photoPath: null };
-  const imagePaths = Image_list;
+  // const { photoPath, imgs } = location.state || { photoPath: null, imgs: photos };
+  const photoPath = location.state.value1;
+  const imgs = location.state.value2;
+  console.log ("photopath:", photoPath,"imgs:" ,imgs)
+  const imagePaths = imgs;
   var rootImageUrl = "";
   if (photoPath != null) {
     rootImageUrl = photoPath;
   } else {
     const randomIndex = Math.floor(Math.random() * imagePaths.length);
     rootImageUrl = imagePaths[randomIndex];
+    console.log("rootUrl:", rootImageUrl);
   }
 
   // Generate corner positions using useMemo to avoid recalculating on every render
@@ -129,96 +134,195 @@ const WaterFalling = ({ xlength = totallength, ylength = totallength }) => {
     return ref === 'S' || ref === 'W' ? -degrees : degrees;
   };
 
-  const decreaseRadius = useCallback((index) => {
-    const duration = 5000; // 5 seconds
+  const decreaseRadius = useCallback((index, callback) => {
+    const duration = 500; // 5 seconds
     const interval = 50; // Update every 50ms
     const steps = duration / interval;
     const decrement = 15 / steps; // Decrement for each step
-
+  
     let currentStep = 0;
-
+  
     const stepDecrease = () => {
       setCircleRadii((prevRadii) => {
         const newRadii = [...prevRadii];
         newRadii[index] = Math.max(newRadii[index] - decrement, 0);
         return newRadii;
       });
-
+  
       currentStep++;
-
+  
       if (currentStep < steps) {
         animationFrameIdRef.current = requestAnimationFrame(stepDecrease);
+      } else if (callback) {
+        callback();
       }
     };
-
+  
     stepDecrease();
-  }, [navigate]);
+  }, []);
+  
+  // const decreaseRadius = useCallback((index) => {
+  //   const duration = 5000; // 5 seconds
+  //   const interval = 50; // Update every 50ms
+  //   const steps = duration / interval;
+  //   const decrement = 15 / steps; // Decrement for each step
 
+  //   let currentStep = 0;
+
+  //   const stepDecrease = () => {
+  //     setCircleRadii((prevRadii) => {
+  //       const newRadii = [...prevRadii];
+  //       newRadii[index] = Math.max(newRadii[index] - decrement, 0);
+  //       return newRadii;
+  //     });
+
+  //     currentStep++;
+
+  //     if (currentStep < steps) {
+  //       animationFrameIdRef.current = requestAnimationFrame(stepDecrease);
+  //     }
+  //   };
+
+  
+  //   stepDecrease();
+  // }, [navigate]);
   const increaseRadius = useCallback(() => {
-    const duration = 5000; // 5 seconds
+    const duration = 500; // 5 seconds
     const interval = 50; // Update every 50ms
     const steps = duration / interval;
     const increment = 15 / steps; // Increment for each step
-
+  
     // Generate random delays for each circle
     const delays = Array.from({ length: numCircles }, () => Math.random() * 500);
-
+  
+    let completedDecreases = 0;
+  
     const animateIncrease = (index) => {
       let currentStep = 0;
-
+  
       const stepIncrease = () => {
         setCircleRadii((prevRadii) => {
           const newRadii = [...prevRadii];
           newRadii[index] = Math.min(newRadii[index] + increment, 10 * (Math.random() + 1));
           return newRadii;
         });
-
+  
         currentStep++;
-
+  
         if (currentStep < steps) {
           animationFrameIdRef.current = requestAnimationFrame(stepIncrease);
         } else {
-          setTimeout(() => decreaseRadius(index), 1000); // Start decreasing after 5 seconds
+          setTimeout(() => {
+            decreaseRadius(index, () => {
+              completedDecreases++;
+              if (completedDecreases === numCircles) {
+                var path = "";
+                switch(Math.floor(Math.random() * 7)) {
+                  case 0:
+                    path = "/picture-throw-greatline";
+                    break;
+                  case 1:
+                    path = "/picture-throw-watercolor";
+                    break;
+                  case 2:
+                    path = "/picture-throw-changecolor";
+                    break;
+                  case 3:
+                    path = "/picture-throw-line";
+                    break;
+                  case 4:
+                    path = "/picture-throw-goodline";
+                    break;
+                  case 5:
+                    path = "/waterripple";
+                    break;
+                  case 6:
+                    path = "/picture-throw";
+                    break;
+                  default:
+                    path = "/picture-throw-greatline";
+                }
+                navigate(path, { state: { photoPath, imgs } });
+              }
+            });
+          }, 3000); // Start decreasing after 5 seconds
         }
       };
-
+  
       setTimeout(stepIncrease, delays[index]); // Start with a delay
     };
-
+  
     for (let i = 0; i < numCircles; i++) {
       animateIncrease(i);
     }
-    var path = "";
-        switch(Math.floor(Math.random() * 7)) {
-          case 0 :
-              path = "/picture-throw-greatline";
-              break;
-          case 1 :
-              path = "/picture-throw-watercolor";
-              break;
-          case 2 :
-              path = "/picture-throw-changecolor";
-              break;
-          case 3 :
-              path = "/picture-throw-line";
-              break;
-          case 4 :
-              path = "/picture-throw-goodline";
-              break;
-          case 5 :
-              path = "/waterripple";
-              break;
-          case 6 :
-              path = "/picture-throw";
-              break;
-          default :
-              path = "/picture-throw-greatline";
-        }
+  }, [numCircles, decreaseRadius, navigate]);
+  
 
-        setTimeout(() => {
-          navigate(path);
-        }, 1000);
-  }, [numCircles, decreaseRadius]);
+  // const increaseRadius = useCallback(() => {
+  //   const duration = 5000; // 5 seconds
+  //   const interval = 50; // Update every 50ms
+  //   const steps = duration / interval;
+  //   const increment = 20 / steps; // Increment for each step
+
+  //   // Generate random delays for each circle
+  //   const delays = Array.from({ length: numCircles }, () => Math.random() * 500);
+
+  //   const animateIncrease = (index) => {
+  //     let currentStep = 0;
+
+  //     const stepIncrease = () => {
+  //       setCircleRadii((prevRadii) => {
+  //         const newRadii = [...prevRadii];
+  //         newRadii[index] = Math.min(newRadii[index] + increment, 10 * (Math.random() + 1));
+  //         return newRadii;
+  //       });
+
+  //       currentStep++;
+
+  //       if (currentStep < steps) {
+  //         animationFrameIdRef.current = requestAnimationFrame(stepIncrease);
+  //       } else {
+  //         setTimeout(() => decreaseRadius(index), 5000); // Start decreasing after 5 seconds
+  //       }
+  //     };
+
+  //     setTimeout(stepIncrease, delays[index]); // Start with a delay
+  //   };
+
+  //   for (let i = 0; i < numCircles; i++) {
+  //     animateIncrease(i);
+  //   }
+  //   var path = "";
+  //       switch(Math.floor(Math.random() * 7)) {
+  //         case 0 :
+  //             path = "/picture-throw-greatline";
+  //             break;
+  //         case 1 :
+  //             path = "/picture-throw-watercolor";
+  //             break;
+  //         case 2 :
+  //             path = "/picture-throw-changecolor";
+  //             break;
+  //         case 3 :
+  //             path = "/picture-throw-line";
+  //             break;
+  //         case 4 :
+  //             path = "/picture-throw-goodline";
+  //             break;
+  //         case 5 :
+  //             path = "/waterripple";
+  //             break;
+  //         case 6 :
+  //             path = "/picture-throw";
+  //             break;
+  //         default :
+  //             path = "/picture-throw-greatline";
+  //       }
+
+  //       setTimeout(() => {
+  //         navigate(path);
+  //       }, 10000);
+  // }, [numCircles, decreaseRadius]);
 
   useEffect(() => {
     increaseRadius();

@@ -4,7 +4,7 @@ import { Image_list } from './login';
 import { useNavigate } from 'react-router-dom';
 
 // Image_list1은 빈 배열로 초기화
-let Image_list1 = [];
+let photos = [];
 let length1 = 0;
 
 function Imageinsert(Image_list1) {
@@ -130,12 +130,15 @@ const RandomPhoto = () => {
     "/picture-throw"
   ];
 
-  const handleClick = (photoPath) => {
+  const handleClick = (photoPath, photos) => {
+    const null1 = null;
     setIsClicked(true);
+    console.log("photos:", photos)
     setTimeout(() => {
-      navigate(paths[Math.floor(Math.random() * paths.length)], { state: { photoPath } });
+      navigate("/waterfalling", { state: { value1: null1, value2: photos } });
     }, 1500);
   };
+  // paths[Math.floor(Math.random() * paths.length)]
 
   const fori = Math.floor(photos.length / radii.length);
 
@@ -165,7 +168,7 @@ const RandomPhoto = () => {
               isClicked={isClicked}
               offsetX={offsetX}
               offsetY={offsetY}
-              onClick={() => handleClick(photo)}
+              onClick={() => handleClick(photo, photos)}
             />
           );
         })
@@ -173,7 +176,7 @@ const RandomPhoto = () => {
     </CircleContainer>
   );
 };
-
+export {photos};
 export default RandomPhoto;
 
 
